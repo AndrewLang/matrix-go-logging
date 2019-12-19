@@ -23,8 +23,7 @@ func setupTestCase(t *testing.T) func(t *testing.T) {
 
 func TestFileLoggerDebugResetIndent(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.FileName = "./logging_test.txt"
-	configuration.FileSize = 1024 * 1024 * 2
+	configuration.FileName = "./logging_test.txt"	
 	exception := NewException("Argument null exception")
 	logger := NewFileLogger("Test.txt").Configure(configuration)
 
@@ -46,7 +45,7 @@ func TestFileLoggerDebugResetIndent(t *testing.T) {
 func TestFileLoggerDebugSlowLogging(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
 	configuration.FileName = "./logging_slow.txt"
-	configuration.FileSize = 1024 * 1024 * 2
+	
 	exception := NewException("Argument null exception")
 	logger := NewFileLogger("SlowMessageGenerator").Configure(configuration)
 
@@ -65,7 +64,7 @@ func TestFileLoggerDebugSlowLogging(t *testing.T) {
 }
 
 // BenchmarAppendMessagesOneByOne take 325.47s for 1000,000
-func BenchmarAppendMessagesOneByOne(t *testing.T) {
+func BenchmarkAppendMessagesOneByOne(b *testing.B) {
 
 	message := MessageContent
 
@@ -85,7 +84,7 @@ func BenchmarAppendMessagesOneByOne(t *testing.T) {
 }
 
 // TestWriteMessagesOneByOne  take 4.82s for 1000,000
-func BenchmarWriteMessagesOneByOne(t *testing.T) {
+func BenchmarkWriteMessagesOneByOne(b *testing.B) {
 	fileName := "1000-1-1.txt"
 	deleteIfExists(fileName)
 
@@ -107,7 +106,7 @@ func BenchmarWriteMessagesOneByOne(t *testing.T) {
 }
 
 // TestWriteMessagesBatch take 0.48 for 1000,000
-func BenchmarWriteMessagesBatch(t *testing.T) {
+func BenchmarkWriteMessagesBatch(b *testing.B) {
 	fileName := "1000-batch.txt"
 	deleteIfExists(fileName)
 
@@ -128,7 +127,7 @@ func BenchmarWriteMessagesBatch(t *testing.T) {
 	}
 }
 
-func BenchmarGenerateFileName(t *testing.T) {
+func TestGenerateFileName(t *testing.T) {
 	fileName := "1000-batch.txt"
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
 	configuration.FileName = fileName
