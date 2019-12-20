@@ -22,7 +22,7 @@ type FileLogger struct {
 	mutex            sync.Mutex
 	file             *os.File
 	timer            *time.Timer
-	configuration    LoggerConfiguration
+	configuration    *LoggerConfiguration
 }
 
 // NewFileLogger create new file logger
@@ -32,7 +32,7 @@ func NewFileLogger(name string) *FileLogger {
 		Formatter:        Formatter{},
 		indentLevel:      0,
 		layoutNames:      []string{},
-		fileName:         "",
+		fileName:         Empty,
 		fileSize:         1024 * 1024 * 2,
 		layoutRepository: NewLayoutRepository(),
 		buffer:           NewStringBuilder(),
@@ -49,7 +49,7 @@ func NewFileLogger(name string) *FileLogger {
 }
 
 // Configure configure logger
-func (logger *FileLogger) Configure(config LoggerConfiguration) *FileLogger {
+func (logger *FileLogger) Configure(config *LoggerConfiguration) *FileLogger {
 	logger.layoutNames = config.LayoutNames
 	logger.fileName = config.FileName
 	logger.fileSize = config.FileSize
@@ -60,7 +60,7 @@ func (logger *FileLogger) Configure(config LoggerConfiguration) *FileLogger {
 // StartGroup start a group
 func (logger *FileLogger) StartGroup(name string) *FileLogger {
 	logger.indentLevel++
-	fmt.Println("Current indent", logger.indentLevel)
+
 	return logger
 }
 
@@ -70,14 +70,12 @@ func (logger *FileLogger) EndGroup() *FileLogger {
 	if logger.indentLevel < 0 {
 		logger.indentLevel = 0
 	}
-	fmt.Println("Current indent", logger.indentLevel)
 	return logger
 }
 
 // ResetGroup reset
 func (logger *FileLogger) ResetGroup() *FileLogger {
 	logger.indentLevel = 0
-	fmt.Println("Current indent", logger.indentLevel)
 	return logger
 }
 

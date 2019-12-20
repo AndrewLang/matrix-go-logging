@@ -14,11 +14,14 @@ func buildFileName(parts ...string) string {
 	}
 	return builder.String()
 }
+
 func getFileExtension(file string) string {
 	return filepath.Ext(file)
 }
+
 func getFileName(path string) string {
 	_, file := filepath.Split(path)
+
 	return file
 }
 func getFileSize(file string) (int64, error) {
@@ -26,11 +29,13 @@ func getFileSize(file string) (int64, error) {
 
 	return info.Size(), err
 }
+
 func getFileNameWithoutExtension(path string) string {
 	_, file := filepath.Split(path)
 	extension := getFileExtension(file)
 	return strings.TrimSuffix(file, extension)
 }
+
 func getFileNameAndExtension(path string) (string, string, string) {
 	dir, file := filepath.Split(path)
 	extension := getFileExtension(file)
@@ -53,6 +58,7 @@ func deleteFile(fileName string) bool {
 
 	return true
 }
+
 func deleteIfExists(fileName string) bool {
 	if fileExists(fileName) {
 		return deleteFile(fileName)
@@ -72,4 +78,39 @@ func generateFileName(fullName string) string {
 	}
 
 	return newName
+}
+
+func createFolder(path string) bool {
+	_, err := os.Stat(path)
+	if os.IsExist(err) {
+		return true
+	}
+
+	err = os.MkdirAll(path, os.ModePerm)
+	return err != nil
+}
+
+func deleteFolder(path string) bool {
+	err := os.RemoveAll(path)
+	return err != nil
+}
+
+// RemoveContents remove
+func RemoveContents(dir string) error {
+	d, err := os.Open(dir)
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+	names, err := d.Readdirnames(-1)
+	if err != nil {
+		return err
+	}
+	for _, name := range names {
+		err = os.RemoveAll(filepath.Join(dir, name))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

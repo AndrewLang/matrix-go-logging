@@ -1,10 +1,16 @@
 package logging
 
 import (
-	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
+
+func TestNewStringBuilder(t *testing.T) {
+	builder := NewStringBuilder()
+
+	assert.Equal(t, builder.Lines, 0, "StringBuilder Lines should be 0 ")
+}
 
 func TestStringBuilderAppend(t *testing.T) {
 	builder := NewStringBuilder()
@@ -19,7 +25,6 @@ func TestStringBuilderAppendLine(t *testing.T) {
 	builder.AppendLine("hello ").AppendLine("world")
 	actual := builder.String()
 
-	fmt.Println("AppendLine resutl: ", actual)
 	assert.Equal(t, actual, "hello \nworld\n", "StringBuilder result should be 'hello world'")
 }
 

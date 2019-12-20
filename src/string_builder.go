@@ -4,13 +4,13 @@ import (
 	"strings"
 )
 
-// StringBuilder string builder wraps the strings.Builder from go library
+// StringBuilder string builder use to build string with high performance
 type StringBuilder struct {
 	internalBuilder *strings.Builder
 	Lines           int
 }
 
-// NewStringBuilder create new string builder
+// NewStringBuilder create a new string builder instance
 func NewStringBuilder() *StringBuilder {
 	var rawBuilder strings.Builder
 	builder := new(StringBuilder)
@@ -19,10 +19,18 @@ func NewStringBuilder() *StringBuilder {
 	return builder
 }
 
-// Append append string
+// Append append string value
 func (b *StringBuilder) Append(value string) *StringBuilder {
 	b.internalBuilder.WriteString(value)
 	b.Lines = 1
+	return b
+}
+
+// AppendLine append a line of string
+func (b *StringBuilder) AppendLine(value string) *StringBuilder {
+	b.internalBuilder.WriteString(value)
+	b.internalBuilder.WriteString(NewLine)
+	b.Lines++
 	return b
 }
 
@@ -30,21 +38,10 @@ func (b *StringBuilder) Append(value string) *StringBuilder {
 func (b *StringBuilder) Reset() *StringBuilder {
 	b.internalBuilder.Reset()
 	b.Lines = 0
-	// var rawBuilder strings.Builder
-	// // builder := new(StringBuilder)
-	// b.internalBuilder = &rawBuilder
 	return b
 }
 
-// AppendLine append a line of string
-func (b *StringBuilder) AppendLine(value string) *StringBuilder {
-	b.internalBuilder.WriteString(value)
-	b.internalBuilder.WriteString("\n")
-	b.Lines++
-	return b
-}
-
-// ToString convert string builder to string
+// String convert string builder to string
 func (b *StringBuilder) String() string {
 	return b.internalBuilder.String()
 }

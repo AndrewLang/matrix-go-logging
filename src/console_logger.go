@@ -11,7 +11,7 @@ type ConsoleLogger struct {
 	indentLevel      int
 	layoutNames      []string
 	layoutRepository LayoutRepository
-	configuration    LoggerConfiguration
+	configuration    *LoggerConfiguration
 }
 
 // NewConsoleLogger create new console logger
@@ -27,7 +27,7 @@ func NewConsoleLogger(name string) *ConsoleLogger {
 }
 
 // Configure configure logger
-func (logger *ConsoleLogger) Configure(config LoggerConfiguration) *ConsoleLogger {
+func (logger *ConsoleLogger) Configure(config *LoggerConfiguration) *ConsoleLogger {
 	logger.layoutNames = config.LayoutNames
 	logger.configuration = config
 	return logger
@@ -36,7 +36,6 @@ func (logger *ConsoleLogger) Configure(config LoggerConfiguration) *ConsoleLogge
 // StartGroup start a group
 func (logger *ConsoleLogger) StartGroup(name string) *ConsoleLogger {
 	logger.indentLevel++
-	fmt.Println("Current indent", logger.indentLevel)
 	return logger
 }
 
@@ -46,14 +45,13 @@ func (logger *ConsoleLogger) EndGroup() *ConsoleLogger {
 	if logger.indentLevel < 0 {
 		logger.indentLevel = 0
 	}
-	fmt.Println("Current indent", logger.indentLevel)
+
 	return logger
 }
 
 // ResetGroup reset
 func (logger *ConsoleLogger) ResetGroup() *ConsoleLogger {
 	logger.indentLevel = 0
-	fmt.Println("Current indent", logger.indentLevel)
 	return logger
 }
 

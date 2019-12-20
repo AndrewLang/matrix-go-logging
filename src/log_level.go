@@ -23,7 +23,6 @@ var (
 	LevelNone = LogLevel{"None", int(0 >> 1)}
 )
 
-
 // LogLevel represent level of log
 type LogLevel struct {
 	Name  string

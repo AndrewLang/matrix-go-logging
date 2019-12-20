@@ -30,7 +30,7 @@ type JSONFileLogger struct {
 	file             *os.File
 	timer            *time.Timer
 	messages         []*LogJSONMessage
-	configuration    LoggerConfiguration
+	configuration    *LoggerConfiguration
 }
 
 // NewJSONFileLogger create new file logger
@@ -56,7 +56,7 @@ func NewJSONFileLogger(name string) *JSONFileLogger {
 }
 
 // Configure configure logger
-func (logger *JSONFileLogger) Configure(config LoggerConfiguration) *JSONFileLogger {
+func (logger *JSONFileLogger) Configure(config *LoggerConfiguration) *JSONFileLogger {
 	logger.layoutNames = config.LayoutNames
 	logger.fileName = config.FileName
 	logger.fileSize = config.FileSize
@@ -95,7 +95,7 @@ func (logger *JSONFileLogger) WriteMessage(level string, message string, objects
 	layout := logger.layoutRepository.BuildLayout(logger.layoutNames...)
 
 	logMessage := NewMessage(logger.Name, level, logger.indentLevel, message, objects...)
-	jsonMessage := &LogJSONMessage {
+	jsonMessage := &LogJSONMessage{
 		Datetime: logger.Formatter.FormatNow(),
 		Name:     logger.Name,
 		Level:    level,

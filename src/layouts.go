@@ -4,39 +4,6 @@ import (
 	"fmt"
 )
 
-const (
-	// LeftBracket left bracket
-	LeftBracket = "["
-	// RightBracket right bracket
-	RightBracket = "]"
-
-	// Name name
-	Name = "Name"
-	// Time time
-	Time = "Time"
-	// Level level
-	Level = "Level"
-	// Indent indent
-	Indent = "Indent"
-	// Message message
-	Message = "Message"
-	// Compose compose
-	Compose = "Compose"
-
-	// NameLayout name layout
-	NameLayout = "NameLayout"
-	// TimeLayout time layout
-	TimeLayout = "TimeLayout"
-	// LevelLayout level
-	LevelLayout = "LevelLayout"
-	// IndentLayout indent
-	IndentLayout = "IndentLayout"
-	// MessageLayout message
-	MessageLayout = "MessageLayout"
-	// ComposeLayout compose
-	ComposeLayout = "ComposeLayout"
-)
-
 // ======================================================================================
 
 // LogMessage message for logging

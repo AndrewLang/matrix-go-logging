@@ -2,19 +2,20 @@ package logging
 
 import (
 	"testing"
-	// "github.com/stretchr/testify/assert"
+	"time"
 )
 
 // TestJsonFileLoggerDebug test
 func TestJsonFileLoggerDebug(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Message})
-	configuration.FileName = "./logging_test.json"
+	configuration.FileName = "./test/logging_test.json"
 	configuration.FileSize = 1024 * 1024 * 5
 
 	exception := NewException("Argument null exception")
 	logger := NewJSONFileLogger("JsonLogger").Configure(configuration)
 
-	deleteIfExists(configuration.FileName)
+	teardown := setupTestCase(t)
+	defer teardown(t, "Delte json test")
 
 	logger.StartGroup("Start Indent").StartGroup("Indent 2")
 
@@ -22,17 +23,21 @@ func TestJsonFileLoggerDebug(t *testing.T) {
 		logger.Info(MessageContent, i, i*2, true, false, exception)
 	}
 	logger.EndGroup().EndGroup()
+
+	// t.Cleanup(teardown)
 }
 
+//
 func TestJsonFileLoggerLevel(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Message})
-	configuration.FileName = "./logging_warn.json"
+	configuration.FileName = "./test/logging_warn.json"
 	configuration.FileSize = 1024 * 1024 * 5
 	configuration.MinLevel = LevelWarn.Value
 	exception := NewException("Argument null exception")
 	logger := NewJSONFileLogger("JsonLogger").Configure(configuration)
 
-	deleteIfExists(configuration.FileName)
+	teardown := setupTestCase(t)
+	defer teardown(t, "Delete Json files for level test")
 
 	logger.StartGroup("Start Indent").StartGroup("Indent 2")
 
@@ -52,6 +57,7 @@ func TestJsonFileLoggerLevel(t *testing.T) {
 		logger.Fatal(MessageContent, i, i*2, true, false, exception)
 	}
 
-
 	logger.EndGroup().EndGroup()
+
+	time.Sleep(1 * time.Second)
 }
