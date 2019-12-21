@@ -21,7 +21,7 @@ func TestJsonFileLoggerDebug(t *testing.T) {
 	for i := 0; i < 500; i++ {
 		logger.Info(MessageContent, i, i*2, true, false, exception)
 	}
-	logger.EndGroup().EndGroup().Close()	
+	logger.EndGroup().EndGroup().Close()
 }
 
 //

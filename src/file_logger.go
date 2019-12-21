@@ -160,7 +160,7 @@ func (logger *FileLogger) initialize() {
 }
 
 // Close close logger
-func(logger *FileLogger) Close() {
+func (logger *FileLogger) Close() {
 	closeFileLogger(logger)
 }
 

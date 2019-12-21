@@ -2,7 +2,7 @@ package logging
 
 import (
 	"fmt"
-	"testing"	
+	"testing"
 )
 
 func TestToString(t *testing.T) {

@@ -86,8 +86,8 @@ func folderExists(path string) bool {
 		return true
 	}
 
-	if os.IsNotExist(err) { 
-		return false 
+	if os.IsNotExist(err) {
+		return false
 	}
 	return true
 }
