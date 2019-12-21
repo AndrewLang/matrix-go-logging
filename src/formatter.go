@@ -6,8 +6,13 @@ import (
 	"time"
 )
 
-// Formatter used to
+// Formatter used to format text/string
 type Formatter struct {
+}
+
+// NewFormatter create new formatter
+func NewFormatter() *Formatter {
+	return &Formatter{}
 }
 
 // Format give parameters
@@ -20,19 +25,18 @@ func (f Formatter) FormatError(err error) string {
 	return fmt.Sprintf("%s", err)
 }
 
-// FormatDateTime format
+// FormatDateTime format given date
 func (f Formatter) FormatDateTime(date time.Time) string {
 	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d.%02d", date.Year(), date.Month(), date.Day(), date.Hour(), date.Minute(), date.Second(), date.Nanosecond()/1000000)
 }
 
-// FormatNow format
+// FormatNow format now
 func (f Formatter) FormatNow() string {
 	return f.FormatDateTime(time.Now())
 }
 
 // Compose compose string with give char and count
 func (f Formatter) Compose(char string, count int) string {
-	// fmt.Println("Compose string with: ", char, count)
 	builder := NewStringBuilder()
 	for i := 0; i < count; i++ {
 		builder.Append(char)

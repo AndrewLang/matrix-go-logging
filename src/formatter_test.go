@@ -2,8 +2,7 @@ package logging
 
 import (
 	"fmt"
-	"testing"
-	//"github.com/stretchr/testify/assert"
+	"testing"	
 )
 
 func TestToString(t *testing.T) {

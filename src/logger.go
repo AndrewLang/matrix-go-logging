@@ -1,5 +1,8 @@
 package logging
 
+// Object represent an object
+type Object interface{}
+
 // LoggerConfiguration configuration for logger
 type LoggerConfiguration struct {
 	LayoutNames []string

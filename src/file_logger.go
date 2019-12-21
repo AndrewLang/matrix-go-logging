@@ -13,7 +13,6 @@ type FileLogger struct {
 	Name             string
 	Formatter        Formatter
 	indentLevel      int
-	layoutNames      []string
 	fileName         string
 	fileSize         int64
 	layoutRepository LayoutRepository
@@ -31,7 +30,6 @@ func NewFileLogger(name string) *FileLogger {
 		Name:             name,
 		Formatter:        Formatter{},
 		indentLevel:      0,
-		layoutNames:      []string{},
 		fileName:         Empty,
 		fileSize:         1024 * 1024 * 2,
 		layoutRepository: NewLayoutRepository(),
@@ -50,7 +48,6 @@ func NewFileLogger(name string) *FileLogger {
 
 // Configure configure logger
 func (logger *FileLogger) Configure(config *LoggerConfiguration) *FileLogger {
-	logger.layoutNames = config.LayoutNames
 	logger.fileName = config.FileName
 	logger.fileSize = config.FileSize
 	logger.configuration = config
@@ -60,7 +57,6 @@ func (logger *FileLogger) Configure(config *LoggerConfiguration) *FileLogger {
 // StartGroup start a group
 func (logger *FileLogger) StartGroup(name string) *FileLogger {
 	logger.indentLevel++
-
 	return logger
 }
 
@@ -86,61 +82,44 @@ func (logger *FileLogger) IsEnable(level LogLevel) bool {
 
 // WriteMessage writer message and data to string
 func (logger *FileLogger) WriteMessage(level string, message string, objects ...interface{}) string {
-	layout := logger.layoutRepository.BuildLayout(logger.layoutNames...)
-
+	layout := logger.layoutRepository.BuildLayout(logger.configuration.LayoutNames...)
 	logMessage := NewMessage(logger.Name, level, logger.indentLevel, message, objects...)
 	content := layout.String(logMessage)
-
 	return content
 }
 
 // Debug write at debug level
 func (logger *FileLogger) Debug(message string, objects ...interface{}) *FileLogger {
-
 	content := logger.WriteMessage(LevelDebug.Name, message, objects...)
-
 	logger.printMessage(content)
-
 	return logger
 }
 
 // Info write at info level
 func (logger *FileLogger) Info(message string, objects ...interface{}) *FileLogger {
-
 	content := logger.WriteMessage(LevelInfo.Name, message, objects...)
-
 	logger.printMessage(content)
-
 	return logger
 }
 
 // Warn write at warn level
 func (logger *FileLogger) Warn(message string, objects ...interface{}) *FileLogger {
-
 	content := logger.WriteMessage(LevelWarn.Name, message, objects...)
-
 	logger.printMessage(content)
-
 	return logger
 }
 
 // Error write at error level
 func (logger *FileLogger) Error(message string, objects ...interface{}) *FileLogger {
-
 	content := logger.WriteMessage(LevelError.Name, message, objects...)
-
 	logger.printMessage(content)
-
 	return logger
 }
 
 // Fatal write at fatal level
 func (logger *FileLogger) Fatal(message string, objects ...interface{}) *FileLogger {
-
 	content := logger.WriteMessage(LevelFatal.Name, message, objects...)
-
 	logger.printMessage(content)
-
 	return logger
 }
 
@@ -152,6 +131,7 @@ func (logger *FileLogger) writeFile() {
 	if err != nil {
 		return
 	}
+
 	if size >= logger.fileSize {
 		logger.file = nil
 		logger.fileName = generateFileName(logger.configuration.FileName)
@@ -177,7 +157,11 @@ func (logger *FileLogger) initialize() {
 			fmt.Println("Create file writer error: ", err, logger.fileName)
 		}
 	}
+}
 
+// Close close logger
+func(logger *FileLogger) Close() {
+	closeFileLogger(logger)
 }
 
 func closeFileLogger(logger *FileLogger) {
@@ -198,7 +182,6 @@ func (logger *FileLogger) printMessage(message string) {
 	logger.buffer.AppendLine(message)
 
 	if logger.buffer.Lines > 100 {
-		// fmt.Println("Flush to file with count achieve 100")
 		logger.writeFile()
 	}
 }

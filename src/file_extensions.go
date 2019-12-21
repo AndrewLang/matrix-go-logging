@@ -80,6 +80,18 @@ func generateFileName(fullName string) string {
 	return newName
 }
 
+func folderExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+
+	if os.IsNotExist(err) { 
+		return false 
+	}
+	return true
+}
+
 func createFolder(path string) bool {
 	_, err := os.Stat(path)
 	if os.IsExist(err) {

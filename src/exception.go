@@ -14,12 +14,10 @@ type Exception struct {
 }
 
 func (e Exception) String() string {
-	// fmt.Println(e.Message)
 	return e.Message
 }
 
 func (e Exception) Error() string {
-	//return fmt.Sprintf("%v %s %s", e.Date, e.Message, e.StackTrace)
 	return e.Message
 }
 

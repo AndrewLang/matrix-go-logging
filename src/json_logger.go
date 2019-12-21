@@ -11,10 +11,10 @@ import (
 
 // LogJSONMessage reresent a json message
 type LogJSONMessage struct {
-	Datetime string `json:Datetime`
-	Name     string `json:Name`
-	Level    string `json:Level`
-	Message  string `json:Message`
+	Datetime string `json:"datetime"`
+	Name     string `json:"name"`
+	Level    string `json:"level"`
+	Message  string `json:"message"`
 }
 
 // JSONFileLogger json logger
@@ -201,6 +201,11 @@ func (logger *JSONFileLogger) initialize() {
 			fmt.Println("Create file writer error: ", err, logger.fileName)
 		}
 	}
+}
+
+// Close close logger
+func (logger *JSONFileLogger) Close() {
+	closeJSONLogger(logger)
 }
 
 // closeJSONLogger close logger resources
