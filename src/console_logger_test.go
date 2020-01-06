@@ -3,6 +3,8 @@ package logging
 import (
 	"fmt"
 	"testing"
+
+	. "github.com/logrusorgru/aurora"
 )
 
 func TestConsoleLogger(t *testing.T) {
@@ -77,24 +79,31 @@ func TestConfigureLayouts(t *testing.T) {
 		Fatal("Testing configuration", 1, 2, 3)
 }
 
-func TestRedConsole(t *testing.T) {
-	fmt.Println("\033[31mHello World \033[0m")
+func TestColorfulConsole(t *testing.T) {
+	fmt.Println("\033[31mHello World\033[0m")
+	fmt.Println("\x1b[31mHello World\x1b[0m")
+	fmt.Println("\u001b[31mHello World\u001b[0m")
+	fmt.Println("\xbd\xb2\x3d\xbc\x20\xe2\x8c\x98")
+	fmt.Println("\033[1;34mTest color\033[0m")
 
 	formatter := NewFormatter()
+	content := "Hello colorful world"
 
-	fmt.Println(formatter.FormatColor("Hello world", ColorGreen))
-	fmt.Println(formatter.FormatColor("Hello world", ColorYellow))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBlue))
-	fmt.Println(formatter.FormatColor("Hello world", ColorMagenta))
-	fmt.Println(formatter.FormatColor("Hello world", ColorCyan))
-	fmt.Println(formatter.FormatColor("Hello world", ColorWhite))
+	fmt.Println(formatter.FormatColor(content, ColorGreen))
+	fmt.Println(formatter.FormatColor(content, ColorYellow))
+	fmt.Println(formatter.FormatColor(content, ColorBlue))
+	fmt.Println(formatter.FormatColor(content, ColorMagenta))
+	fmt.Println(formatter.FormatColor(content, ColorCyan))
+	fmt.Println(formatter.FormatColor(content, ColorWhite))
 
-	
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightRed))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightGreen))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightYellow))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightBlue))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightMagenta))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightCyan))
-	fmt.Println(formatter.FormatColor("Hello world", ColorBrightWhite))
+	fmt.Println(formatter.FormatColor(content, ColorBrightRed))
+	fmt.Println(formatter.FormatColor(content, ColorBrightGreen))
+	fmt.Println(formatter.FormatColor(content, ColorBrightYellow))
+	fmt.Println(formatter.FormatColor(content, ColorBrightBlue))
+	fmt.Println(formatter.FormatColor(content, ColorBrightMagenta))
+	fmt.Println(formatter.FormatColor(content, ColorBrightCyan))
+	fmt.Println(formatter.FormatColor(content, ColorBrightWhite))
+
+	fmt.Println("Hello,", Magenta("Aurora"))
+	fmt.Println(Bold(Cyan("Cya!")))
 }

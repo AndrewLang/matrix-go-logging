@@ -45,6 +45,8 @@ const (
 	ColorEsc = "\033["
 	// ColorClear clear color
 	ColorClear = ColorEsc + "0m"
+	// ColorDefaultText default text color
+	ColorDefaultText = ColorEsc + "39m"
 	// ColorBlack black
 	ColorBlack = ColorEsc + "30m"
 	// ColorRed red

@@ -9,7 +9,7 @@ func main() {
 	fmt.Println("Start to run unit tests")
 
 	execute("pwd")
-	execute("go test ./... -v")
+	execute("go test -v ./...")
 
 	fmt.Println("Finish run unit tests")
 }

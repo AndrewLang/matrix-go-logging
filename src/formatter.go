@@ -20,7 +20,7 @@ func (f Formatter) Format(format string, param ...interface{}) string {
 	return fmt.Sprintf(format, param...)
 }
 
-// FormatColor format text with console color format 
+// FormatColor format text with console color format
 func (f Formatter) FormatColor(value string, color string) string {
 	return fmt.Sprintf("%s%s%s", color, value, ColorClear)
 }
