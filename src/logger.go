@@ -9,6 +9,12 @@ type LoggerConfiguration struct {
 	FileName    string
 	FileSize    int64
 	MinLevel    int
+	UseColor    bool
+	ColorDebug  string
+	ColorInfo   string
+	ColorWarn   string
+	ColorError  string
+	ColorFatal  string
 }
 
 // NewLoggerConfiguration create new configuration
@@ -18,6 +24,12 @@ func NewLoggerConfiguration(layouts []string) *LoggerConfiguration {
 		FileName:    Empty,
 		FileSize:    DefaultLogFileSize,
 		MinLevel:    LevelAll.Value,
+		UseColor:    true,
+		ColorDebug:  ColorDefaultText,
+		ColorInfo:   ColorGreen,
+		ColorWarn:   ColorYellow,
+		ColorError:  ColorMagenta,
+		ColorFatal:  ColorRed,
 	}
 }
 

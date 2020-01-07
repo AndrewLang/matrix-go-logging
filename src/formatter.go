@@ -20,9 +20,24 @@ func (f Formatter) Format(format string, param ...interface{}) string {
 	return fmt.Sprintf(format, param...)
 }
 
-// FormatColor format text with console color format
-func (f Formatter) FormatColor(value string, color string) string {
-	return fmt.Sprintf("%s%s%s", color, value, ColorClear)
+// FormatConsoleColor format text with console color format
+func (f Formatter) FormatConsoleColor(value string, color string) string {
+	return fmt.Sprintf("%s%s%s", color, value, ResetAllStyle)
+}
+
+// FormatConsoleBgColor format text with console color format
+func (f Formatter) FormatConsoleBgColor(value string, color string) string {
+	return fmt.Sprintf("%s%s%s", color, value, ResetAllStyle)
+}
+
+// FormatConsoleWith256Color Format text with console 256 color format
+func (f Formatter) FormatConsoleWith256Color(value string, num int) string {
+	return fmt.Sprintf("%s%d%s%s%s", Color256Start, num, Color256End, value, ResetAllStyle)
+}
+
+// FormatConsoleBgWith256Color Format background with console 256 color format
+func (f Formatter) FormatConsoleBgWith256Color(value string, num int) string {
+	return fmt.Sprintf("%s%d%s%s%s", Color256BgStart, num, Color256End, value, ResetAllStyle)
 }
 
 // FormatError format

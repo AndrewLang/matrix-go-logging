@@ -2,9 +2,10 @@ package logging
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
-	. "github.com/logrusorgru/aurora"
+	"golang.org/x/sys/windows"
 )
 
 func TestConsoleLogger(t *testing.T) {
@@ -79,7 +80,72 @@ func TestConfigureLayouts(t *testing.T) {
 		Fatal("Testing configuration", 1, 2, 3)
 }
 
+func TestWithCustomColor(t *testing.T) {
+	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
+	configuration.ColorDebug = ColorDarkGray
+	configuration.ColorInfo = ColorLightGreen
+	configuration.ColorWarn = ColorLightYellow
+	configuration.ColorError = ColorLightMagenta
+	configuration.ColorFatal = ColorLightRed
+	logger := NewConsoleLogger("Testing").Configure(configuration)
+
+	logger.Debug("Testing configuration", 1, 2, 3).
+		Info("Testing configuration", 1, 2, 3).
+		Warn("Testing configuration", 1, 2, 3).
+		Error("Testing configuration", 1, 2, 3).
+		Fatal("Testing configuration", 1, 2, 3)
+}
+
+func TestWithoutColor(t *testing.T) {
+	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
+	configuration.UseColor = false
+	logger := NewConsoleLogger("Testing").Configure(configuration)
+
+	logger.Debug("Testing configuration", 1, 2, 3).
+		Info("Testing configuration", 1, 2, 3).
+		Warn("Testing configuration", 1, 2, 3).
+		Error("Testing configuration", 1, 2, 3).
+		Fatal("Testing configuration", 1, 2, 3)
+}
+
+func TestConsole256Color(t *testing.T) {
+	fmt.Println("\033[38;5;82mHello \033[38;5;198mWorld\033[0m")
+
+	formatter := NewFormatter()
+
+	for i := 0; i <= 256; i++ {
+		fmt.Print(formatter.FormatConsoleWith256Color(PaddingRight(fmt.Sprintf("color %v", i), " ", 12), i))
+		if i > 0 && (i+1)%10 == 0 {
+			fmt.Println("")
+		}
+	}
+
+	fmt.Println("")
+	fmt.Println("")
+}
+
+func TestConsole256BgColor(t *testing.T) {	
+
+	formatter := NewFormatter()
+
+	for i := 0; i <= 256; i++ {
+		fmt.Print(formatter.FormatConsoleBgWith256Color(PaddingRight(fmt.Sprintf("color %v", i), " ", 12), i))
+		if i > 0 && (i+1)%10 == 0 {
+			fmt.Println("")
+		}
+	}
+
+	fmt.Println("")
+	fmt.Println("")
+}
+
 func TestColorfulConsole(t *testing.T) {
+	stdout := windows.Handle(os.Stdout.Fd())
+	var originalMode uint32
+
+	windows.GetConsoleMode(stdout, &originalMode)
+	windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+
 	fmt.Println("\033[31mHello World\033[0m")
 	fmt.Println("\x1b[31mHello World\x1b[0m")
 	fmt.Println("\u001b[31mHello World\u001b[0m")
@@ -89,21 +155,18 @@ func TestColorfulConsole(t *testing.T) {
 	formatter := NewFormatter()
 	content := "Hello colorful world"
 
-	fmt.Println(formatter.FormatColor(content, ColorGreen))
-	fmt.Println(formatter.FormatColor(content, ColorYellow))
-	fmt.Println(formatter.FormatColor(content, ColorBlue))
-	fmt.Println(formatter.FormatColor(content, ColorMagenta))
-	fmt.Println(formatter.FormatColor(content, ColorCyan))
-	fmt.Println(formatter.FormatColor(content, ColorWhite))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorGreen))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorYellow))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBlue))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorMagenta))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorCyan))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorWhite))
 
-	fmt.Println(formatter.FormatColor(content, ColorBrightRed))
-	fmt.Println(formatter.FormatColor(content, ColorBrightGreen))
-	fmt.Println(formatter.FormatColor(content, ColorBrightYellow))
-	fmt.Println(formatter.FormatColor(content, ColorBrightBlue))
-	fmt.Println(formatter.FormatColor(content, ColorBrightMagenta))
-	fmt.Println(formatter.FormatColor(content, ColorBrightCyan))
-	fmt.Println(formatter.FormatColor(content, ColorBrightWhite))
-
-	fmt.Println("Hello,", Magenta("Aurora"))
-	fmt.Println(Bold(Cyan("Cya!")))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightRed))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightGreen))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightYellow))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightBlue))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightMagenta))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightCyan))
+	fmt.Println(formatter.FormatConsoleColor(content, ColorBrightWhite))
 }

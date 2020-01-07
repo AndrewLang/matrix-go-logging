@@ -2,6 +2,9 @@ package logging
 
 import (
 	"fmt"
+	"os"
+
+	"golang.org/x/sys/windows"
 )
 
 // ConsoleLogger log to console
@@ -23,6 +26,17 @@ func NewConsoleLogger(name string) *ConsoleLogger {
 		layoutNames:      []string{},
 		layoutRepository: NewLayoutRepository(),
 	}
+
+	/*set console mode to enable virtual terminal processing,
+	  otherwise it may not work on some windows
+	*/
+
+	stdout := windows.Handle(os.Stdout.Fd())
+	var originalMode uint32
+
+	windows.GetConsoleMode(stdout, &originalMode)
+	windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
+
 	return &logger
 }
 
@@ -75,7 +89,7 @@ func (logger *ConsoleLogger) Debug(message string, objects ...interface{}) *Cons
 
 	content := logger.WriteMessage(LevelDebug.Name, message, objects...)
 
-	logger.printMessage(content)
+	logger.printMessage(content, LevelDebug)
 
 	return logger
 }
@@ -85,7 +99,7 @@ func (logger *ConsoleLogger) Info(message string, objects ...interface{}) *Conso
 
 	content := logger.WriteMessage(LevelInfo.Name, message, objects...)
 
-	logger.printMessage(content)
+	logger.printMessage(content, LevelInfo)
 
 	return logger
 }
@@ -95,7 +109,7 @@ func (logger *ConsoleLogger) Warn(message string, objects ...interface{}) *Conso
 
 	content := logger.WriteMessage(LevelWarn.Name, message, objects...)
 
-	logger.printMessage(content)
+	logger.printMessage(content, LevelWarn)
 
 	return logger
 }
@@ -105,7 +119,7 @@ func (logger *ConsoleLogger) Error(message string, objects ...interface{}) *Cons
 
 	content := logger.WriteMessage(LevelError.Name, message, objects...)
 
-	logger.printMessage(content)
+	logger.printMessage(content, LevelError)
 
 	return logger
 }
@@ -115,11 +129,34 @@ func (logger *ConsoleLogger) Fatal(message string, objects ...interface{}) *Cons
 
 	content := logger.WriteMessage(LevelFatal.Name, message, objects...)
 
-	logger.printMessage(content)
+	logger.printMessage(content, LevelFatal)
 
 	return logger
 }
 
-func (logger *ConsoleLogger) printMessage(message string) {
-	fmt.Println(message)
+func (logger *ConsoleLogger) printMessage(message string, level LogLevel) {
+	if logger.configuration.UseColor {
+		color := logger.getLevelColor(level)
+		formatter := NewFormatter()
+		fmt.Println(formatter.FormatConsoleColor(message, color))
+	} else {
+		fmt.Println(message)
+	}
+}
+
+func (logger *ConsoleLogger) getLevelColor(level LogLevel) string {
+	switch level.Name {
+	case LevelDebug.Name:
+		return logger.configuration.ColorDebug
+	case LevelInfo.Name:
+		return logger.configuration.ColorInfo
+	case LevelWarn.Name:
+		return logger.configuration.ColorWarn
+	case LevelError.Name:
+		return logger.configuration.ColorError
+	case LevelFatal.Name:
+		return logger.configuration.ColorFatal
+	default:
+		return ColorDefaultText
+	}
 }
