@@ -1,7 +1,106 @@
 package logging
 
+import (
+	// "fmt"
+	"strings"
+)
+
 // Object represent an object
 type Object interface{}
+
+// Any an alias for object
+type Any interface{}
+
+// LogLevelStyle level style configuration with foreground, background color and styles
+type LogLevelStyle struct {
+	Foreground string `json:"foreground"`
+	Background string `json:"background"`
+	Styles     string `json:"styles"`
+}
+
+func (style LogLevelStyle) parseForeground() string {
+	color := ""
+
+	if IsNullOrEmpty(style.Foreground) {
+		return color
+	}
+
+	if IsNumber(style.Foreground) {		
+		formatter := NewFormatter()
+		number, _ := ToNumber(style.Foreground)
+		color = formatter.Format256Color(number)
+	} else {
+		if value, ok := KnownColors[ForegroundPrefix+style.Foreground]; ok {
+			color = value
+		}
+	}
+	return color
+}
+
+func (style LogLevelStyle) parseBackground() string {
+	color := ""
+
+	if IsNullOrEmpty(style.Background) {
+		return color
+	}
+
+	if IsNumber(style.Background) {
+		formatter := NewFormatter()
+		number, _ := ToNumber(style.Background)
+		color = formatter.FormatBg256Color(number)
+	} else {
+		if value, ok := KnownColors[BackgroundPrefix+style.Background]; ok {
+			color = value
+		}
+	}
+
+	return color
+}
+
+func (style LogLevelStyle) parseStyle() []string {
+	styles := make([]string, 0)
+
+	if IsNullOrEmpty(style.Background) {
+		return styles
+	}
+
+	for _, part := range strings.Split(style.Styles, StyleSeparator) {
+		value := strings.Trim(part, Space)
+		if IsNullOrEmpty(value) {
+			continue
+		}
+
+		if s, ok := KnownStyles[value]; ok {
+			styles = append(styles, s)
+		} else {
+			styles = append(styles, value)
+		}
+	}
+
+	return styles
+}
+
+func (style LogLevelStyle) parseLevelStyles() []string {
+	styles := make([]string, 0)
+	part := style.parseForeground()
+
+	if NotNullOrEmpty(part) {
+		styles = append(styles, part)
+	}
+
+	part = style.parseBackground()
+	if NotNullOrEmpty(part) {
+		styles = append(styles, part)
+	}
+
+	parts := style.parseStyle()
+	if len(parts) > 0 {
+		styles = append(styles, parts...)
+	}
+	// fmt.Println("Level styles: ", styles)
+
+	return styles
+}
 
 // LoggerConfiguration configuration for logger
 type LoggerConfiguration struct {
@@ -10,11 +109,11 @@ type LoggerConfiguration struct {
 	FileSize    int64
 	MinLevel    int
 	UseColor    bool
-	ColorDebug  string
-	ColorInfo   string
-	ColorWarn   string
-	ColorError  string
-	ColorFatal  string
+	ColorDebug  LogLevelStyle
+	ColorInfo   LogLevelStyle
+	ColorWarn   LogLevelStyle
+	ColorError  LogLevelStyle
+	ColorFatal  LogLevelStyle
 }
 
 // NewLoggerConfiguration create new configuration
@@ -25,11 +124,11 @@ func NewLoggerConfiguration(layouts []string) *LoggerConfiguration {
 		FileSize:    DefaultLogFileSize,
 		MinLevel:    LevelAll.Value,
 		UseColor:    true,
-		ColorDebug:  ColorDefaultText,
-		ColorInfo:   ColorGreen,
-		ColorWarn:   ColorYellow,
-		ColorError:  ColorMagenta,
-		ColorFatal:  ColorRed,
+		ColorDebug:  LogLevelStyle{ColorDefaultText, "", ""},
+		ColorInfo:   LogLevelStyle{ColorGreen, "", ""},
+		ColorWarn:   LogLevelStyle{ColorYellow, "", ""},
+		ColorError:  LogLevelStyle{ColorMagenta, "", ""},
+		ColorFatal:  LogLevelStyle{ColorRed, "", ""},
 	}
 }
 

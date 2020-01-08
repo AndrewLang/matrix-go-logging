@@ -20,24 +20,38 @@ func (f Formatter) Format(format string, param ...interface{}) string {
 	return fmt.Sprintf(format, param...)
 }
 
-// FormatConsoleColor format text with console color format
-func (f Formatter) FormatConsoleColor(value string, color string) string {
-	return fmt.Sprintf("%s%s%s", color, value, ResetAllStyle)
+// FormatConsoleStyle build a console style string with color and style settings
+func (f Formatter) FormatConsoleStyle(styles ...string) string {
+	// fmt.Println("Console style: ", styles, JoinWith(";", styles...))
+
+	builder := NewStringBuilder()
+	builder.Append(StyleEsc)
+	builder.Append(JoinWith(";", styles...))
+	builder.Append(StyleEnd)
+
+	// fmt.Println("Console style: ", builder.String())
+
+	return builder.String()
 }
 
-// FormatConsoleBgColor format text with console color format
-func (f Formatter) FormatConsoleBgColor(value string, color string) string {
-	return fmt.Sprintf("%s%s%s", color, value, ResetAllStyle)
+// FormatConsoleOutput Format console output with given styles
+func (f Formatter) FormatConsoleOutput(value string, styles ...string) string {
+	builder := NewStringBuilder()
+	builder.Append(f.FormatConsoleStyle(styles...))
+	builder.Append(value)
+	builder.Append(ResetAllStyle)
+
+	return builder.String()
 }
 
-// FormatConsoleWith256Color Format text with console 256 color format
-func (f Formatter) FormatConsoleWith256Color(value string, num int) string {
-	return fmt.Sprintf("%s%d%s%s%s", Color256Start, num, Color256End, value, ResetAllStyle)
+// Format256Color format 256 color
+func (f Formatter) Format256Color(num int) string {
+	return fmt.Sprintf("%s%d", Color256Start, num)
 }
 
-// FormatConsoleBgWith256Color Format background with console 256 color format
-func (f Formatter) FormatConsoleBgWith256Color(value string, num int) string {
-	return fmt.Sprintf("%s%d%s%s%s", Color256BgStart, num, Color256End, value, ResetAllStyle)
+// FormatBg256Color format 256 background color
+func (f Formatter) FormatBg256Color(num int) string {
+	return fmt.Sprintf("%s%d", Color256BgStart, num)
 }
 
 // FormatError format

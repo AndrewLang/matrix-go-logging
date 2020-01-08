@@ -27,10 +27,10 @@ func NewConsoleLogger(name string) *ConsoleLogger {
 		layoutRepository: NewLayoutRepository(),
 	}
 
-	/*set console mode to enable virtual terminal processing,
+	/*
+	  set console mode to enable virtual terminal processing,
 	  otherwise it may not work on some windows
 	*/
-
 	stdout := windows.Handle(os.Stdout.Fd())
 	var originalMode uint32
 
@@ -136,27 +136,29 @@ func (logger *ConsoleLogger) Fatal(message string, objects ...interface{}) *Cons
 
 func (logger *ConsoleLogger) printMessage(message string, level LogLevel) {
 	if logger.configuration.UseColor {
-		color := logger.getLevelColor(level)
+		style := logger.getLevelStyle(level)
 		formatter := NewFormatter()
-		fmt.Println(formatter.FormatConsoleColor(message, color))
+		fmt.Println(formatter.FormatConsoleOutput(message, style...))
 	} else {
 		fmt.Println(message)
 	}
 }
 
-func (logger *ConsoleLogger) getLevelColor(level LogLevel) string {
+func (logger *ConsoleLogger) getLevelStyle(level LogLevel) []string {
+	styles := make([]string, 0)
+
 	switch level.Name {
 	case LevelDebug.Name:
-		return logger.configuration.ColorDebug
+		styles = logger.configuration.ColorDebug.parseLevelStyles()
 	case LevelInfo.Name:
-		return logger.configuration.ColorInfo
+		styles = logger.configuration.ColorInfo.parseLevelStyles()
 	case LevelWarn.Name:
-		return logger.configuration.ColorWarn
+		styles = logger.configuration.ColorWarn.parseLevelStyles()
 	case LevelError.Name:
-		return logger.configuration.ColorError
+		styles = logger.configuration.ColorError.parseLevelStyles()
 	case LevelFatal.Name:
-		return logger.configuration.ColorFatal
-	default:
-		return ColorDefaultText
+		styles = logger.configuration.ColorFatal.parseLevelStyles()
 	}
+
+	return styles
 }
