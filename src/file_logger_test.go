@@ -1,7 +1,7 @@
 package logging
 
 import (
-	"fmt"
+	// "fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,6 +20,9 @@ func setupTestCase(t *testing.T) func(t *testing.T, fileName string, message str
 
 	return func(t *testing.T, fileName string, message string) {
 		if CleanTestFolder {
+			configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
+			logger := NewConsoleLogger("Test_Env").Configure(configuration)
+
 			dirRead, _ := os.Open(TestFolder)
 			files, _ := dirRead.Readdir(0)
 
@@ -28,10 +31,12 @@ func setupTestCase(t *testing.T) func(t *testing.T, fileName string, message str
 				name := file.Name()
 				if strings.HasPrefix(name, fileName) {
 					err := os.Remove(filepath.Join(TestFolder, name))
-					fmt.Println("Delete file", name, err)
+
+					logger.Warn("Delete file: ", name, " Error: ", err)
 				}
 			}
-			fmt.Println("Delete test folder result: ", message)
+
+			logger.Warn("Delete test folder result: ", message)
 		}
 	}
 }

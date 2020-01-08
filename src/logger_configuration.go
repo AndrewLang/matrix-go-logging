@@ -1,5 +1,9 @@
 package logging
 
+import (
+	"encoding/json"
+)
+
 // LoggerConfiguration configuration for logger
 type LoggerConfiguration struct {
 	LayoutNames []string      `json:"layoutNames`
@@ -28,4 +32,16 @@ func NewLoggerConfiguration(layouts []string) *LoggerConfiguration {
 		ErrorStyle:  LogLevelStyle{ColorMagenta.Name, "", ""},
 		FatalStyle:  LogLevelStyle{ColorRed.Name, "", ""},
 	}
+}
+
+// ToJSON Convert configuration to json string
+func (config *LoggerConfiguration) ToJSON() string {
+	content, _ := json.MarshalIndent(config, "", "\t")
+
+	return string(content)
+}
+
+// FromJSON Load configuration from json string
+func (config *LoggerConfiguration) FromJSON(jsonContent string) {
+	json.Unmarshal([]byte(jsonContent), config)
 }
