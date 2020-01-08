@@ -82,13 +82,30 @@ func TestConfigureLayouts(t *testing.T) {
 		Fatal("Testing configuration", 1, 2, 3)
 }
 
-func TestWithCustomColor(t *testing.T) {
+func TestWithCustomColorName(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.ColorDebug = LogLevelStyle{ColorDarkGray, "", ""}
-	configuration.ColorInfo = LogLevelStyle{ColorLightGreen, "", ""}
-	configuration.ColorWarn = LogLevelStyle{ColorLightYellow, "", ""}
-	configuration.ColorError = LogLevelStyle{ColorLightMagenta, "", ""}
-	configuration.ColorFatal = LogLevelStyle{ColorLightRed, "", ""}
+	configuration.ColorDebug = LogLevelStyle{"DarkGray", "", ""}
+	configuration.ColorInfo = LogLevelStyle{"LightGreen", "", ""}
+	configuration.ColorWarn = LogLevelStyle{"LightYellow", "", ""}
+	configuration.ColorError = LogLevelStyle{"LightMagenta", "", ""}
+	configuration.ColorFatal = LogLevelStyle{"LightRed", "", ""}
+
+	logger := NewConsoleLogger("Testing").Configure(configuration)
+
+	logger.Debug("Testing configuration", 1, 2, 3).
+		Info("Testing configuration", 1, 2, 3).
+		Warn("Testing configuration", 1, 2, 3).
+		Error("Testing configuration", 1, 2, 3).
+		Fatal("Testing configuration", 1, 2, 3)
+}
+
+func TestWithCustomColorCode(t *testing.T) {
+	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
+	configuration.ColorDebug = LogLevelStyle{"237", "", ""}
+	configuration.ColorInfo = LogLevelStyle{"36", "", ""}
+	configuration.ColorWarn = LogLevelStyle{"226", "", ""}
+	configuration.ColorError = LogLevelStyle{"165", "", ""}
+	configuration.ColorFatal = LogLevelStyle{"197", "", ""}
 
 	logger := NewConsoleLogger("Testing").Configure(configuration)
 
@@ -215,29 +232,29 @@ func TestColorfulConsole(t *testing.T) {
 	formatter := NewFormatter()
 	content := "Hello colorful world"
 
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorGreen))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorYellow))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBlue))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorMagenta))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorCyan))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorWhite))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorGreen.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorYellow.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBlue.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorMagenta.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorCyan.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorWhite.Name))
 
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightRed))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightGreen))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightYellow))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightBlue))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightMagenta))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightCyan))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightWhite))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightRed.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightGreen.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightYellow.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightBlue.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightMagenta.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightCyan.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightWhite.Name))
 }
 
 func TestParseLevelStyles(t *testing.T) {
-	style := LogLevelStyle{ColorDefaultText, ColorRed, "1 , 4 "}
+	style := LogLevelStyle{ColorDefaultText.Name, ColorRed.Value, "1 , 4 "}
 
 	actual := style.parseLevelStyles()
 
 	assert.Equal(t, 4, len(actual), "Style length should 4")
-	assert.Equal(t, "38;5;39", actual[0], "Style length should be 4")
+	assert.Equal(t, "39", actual[0], "Style length should be 4")
 	assert.Equal(t, "48;5;31", actual[1], "Style length should be 4")
 	assert.Equal(t, "1", actual[2], "Style length should be 1")
 	assert.Equal(t, "4", actual[3], "Style length should be 4")

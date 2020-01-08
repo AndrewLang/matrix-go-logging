@@ -25,7 +25,7 @@ func (style LogLevelStyle) parseForeground() string {
 		return color
 	}
 
-	if IsNumber(style.Foreground) {		
+	if IsNumber(style.Foreground) {
 		formatter := NewFormatter()
 		number, _ := ToNumber(style.Foreground)
 		color = formatter.Format256Color(number)
@@ -124,11 +124,11 @@ func NewLoggerConfiguration(layouts []string) *LoggerConfiguration {
 		FileSize:    DefaultLogFileSize,
 		MinLevel:    LevelAll.Value,
 		UseColor:    true,
-		ColorDebug:  LogLevelStyle{ColorDefaultText, "", ""},
-		ColorInfo:   LogLevelStyle{ColorGreen, "", ""},
-		ColorWarn:   LogLevelStyle{ColorYellow, "", ""},
-		ColorError:  LogLevelStyle{ColorMagenta, "", ""},
-		ColorFatal:  LogLevelStyle{ColorRed, "", ""},
+		ColorDebug:  LogLevelStyle{ColorDefaultText.Name, "", ""},
+		ColorInfo:   LogLevelStyle{ColorGreen.Name, "", ""},
+		ColorWarn:   LogLevelStyle{ColorYellow.Name, "", ""},
+		ColorError:  LogLevelStyle{ColorMagenta.Name, "", ""},
+		ColorFatal:  LogLevelStyle{ColorRed.Name, "", ""},
 	}
 }
 

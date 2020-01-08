@@ -1,5 +1,10 @@
 package logging
 
+type ColorInfo struct {
+	Name  string
+	Value string
+}
+
 const (
 	// Empty empty string
 	Empty string = ""
@@ -52,90 +57,7 @@ const (
 	StyleEsc = "\033["
 	// StyleEnd style end indicator, a style could be 37m, or combined style 1;2;32m
 	StyleEnd = "m"
-	// ColorDefaultText default text color
-	ColorDefaultText = "39"
-	// ColorBlack black
-	ColorBlack = "30"
-	// ColorRed red
-	ColorRed = "31"
-	// ColorGreen green
-	ColorGreen = "32"
-	// ColorYellow yellow
-	ColorYellow = "33"
-	// ColorBlue blue
-	ColorBlue = "34"
-	// ColorMagenta magenta
-	ColorMagenta = "35"
-	// ColorCyan cyan
-	ColorCyan = "36"
-	// ColorLightGray light gray
-	ColorLightGray = "37"
-	// ColorBgDefault default bg
-	ColorBgDefault = "49"
-	// ColorBgBlack black
-	ColorBgBlack = "40"
-	// ColorBgRed red
-	ColorBgRed = "41"
-	// ColorBgGreen green
-	ColorBgGreen = "42"
-	// ColorBgYellow yellow
-	ColorBgYellow = "43"
-	// ColorBgBlue blue
-	ColorBgBlue = "44"
-	// ColorBgMagenta magenta
-	ColorBgMagenta = "45"
-	// ColorBgCyan cyan
-	ColorBgCyan = "46"
-	// ColorBgLightGray light gray
-	ColorBgLightGray = "47"
-	// ColorBgDarkGray dark gray
-	ColorBgDarkGray = "100"
-	// ColorBgLightRed light red
-	ColorBgLightRed = "101"
-	// ColorBgLightGreen light green
-	ColorBgLightGreen = "102"
-	// ColorBgLightYellow light yellow
-	ColorBgLightYellow = "103"
-	// ColorBgLightBlue light blue
-	ColorBgLightBlue = "104"
-	// ColorBgLightMagenta light magenta
-	ColorBgLightMagenta = "105"
-	// ColorBgLightCyan light cyan
-	ColorBgLightCyan = "106"
-	// ColorBgWhite bg white
-	ColorBgWhite = "107"
-	// ColorDarkGray dark gray
-	ColorDarkGray = "90"
-	// ColorLightRed light red
-	ColorLightRed = "91"
-	// ColorLightGreen light green
-	ColorLightGreen = "92"
-	// ColorLightYellow light yellow
-	ColorLightYellow = "93"
-	// ColorLightBlue lightblue
-	ColorLightBlue = "94"
-	// ColorLightMagenta light magenta
-	ColorLightMagenta = "95"
-	// ColorLightCyan light cyan
-	ColorLightCyan = "96"
-	// ColorWhite white
-	ColorWhite = "97"
-	// ColorBrightBlack bright black
-	ColorBrightBlack = "30;1"
-	// ColorBrightRed bright red
-	ColorBrightRed = "31;1"
-	// ColorBrightGreen bright green
-	ColorBrightGreen = "32;1"
-	// ColorBrightYellow brightyellow
-	ColorBrightYellow = "33;1"
-	// ColorBrightBlue bright blue
-	ColorBrightBlue = "34;1"
-	// ColorBrightMagenta bright magenta
-	ColorBrightMagenta = "35;1"
-	// ColorBrightCyan bright cyan
-	ColorBrightCyan = "36;1"
-	// ColorBrightWhite bright white
-	ColorBrightWhite = "37;1"
+
 	// Color256Start 256 color start
 	Color256Start = "38;5;"
 	// Color256End 256 color end
@@ -182,6 +104,92 @@ const (
 )
 
 var (
+
+	// ColorDefaultText default text color
+	ColorDefaultText = ColorInfo{"DefaultText", "39"}
+	// ColorBlack black
+	ColorBlack = ColorInfo{"Black", "30"}
+	// ColorRed red
+	ColorRed = ColorInfo{"Red", "31"}
+	// ColorGreen green
+	ColorGreen = ColorInfo{"Green", "32"}
+	// ColorYellow yellow
+	ColorYellow = ColorInfo{"Yellow", "33"}
+	// ColorBlue blue
+	ColorBlue = ColorInfo{"Blue", "34"}
+	// ColorMagenta magenta
+	ColorMagenta = ColorInfo{"Magenta", "35"}
+	// ColorCyan cyan
+	ColorCyan = ColorInfo{"Cyan", "36"}
+	// ColorLightGray light gray
+	ColorLightGray = ColorInfo{"LightGray", "37"}
+	// ColorBgDefault default bg
+	ColorBgDefault = ColorInfo{"Default", "49"}
+	// ColorBgBlack black
+	ColorBgBlack = ColorInfo{"Black", "40"}
+	// ColorBgRed red
+	ColorBgRed = ColorInfo{"Red", "41"}
+	// ColorBgGreen green
+	ColorBgGreen = ColorInfo{"Green", "42"}
+	// ColorBgYellow yellow
+	ColorBgYellow = ColorInfo{"Yellow", "43"}
+	// ColorBgBlue blue
+	ColorBgBlue = ColorInfo{"Blue", "44"}
+	// ColorBgMagenta magenta
+	ColorBgMagenta = ColorInfo{"Magenta", "45"}
+	// ColorBgCyan cyan
+	ColorBgCyan = ColorInfo{"Cyan", "46"}
+	// ColorBgLightGray light gray
+	ColorBgLightGray = ColorInfo{"LightGray", "47"}
+	// ColorBgDarkGray dark gray
+	ColorBgDarkGray = ColorInfo{"DarkGray", "100"}
+	// ColorBgLightRed light red
+	ColorBgLightRed = ColorInfo{"LightRed", "101"}
+	// ColorBgLightGreen light green
+	ColorBgLightGreen = ColorInfo{"LightGreen", "102"}
+	// ColorBgLightYellow light yellow
+	ColorBgLightYellow = ColorInfo{"LightYellow", "103"}
+	// ColorBgLightBlue light blue
+	ColorBgLightBlue = ColorInfo{"LightBlue", "104"}
+	// ColorBgLightMagenta light magenta
+	ColorBgLightMagenta = ColorInfo{"LightMagenta", "105"}
+	// ColorBgLightCyan light cyan
+	ColorBgLightCyan = ColorInfo{"LightCyan", "106"}
+	// ColorBgWhite bg white
+	ColorBgWhite = ColorInfo{"White", "107"}
+	// ColorDarkGray dark gray
+	ColorDarkGray = ColorInfo{"DarkGray", "90"}
+	// ColorLightRed light red
+	ColorLightRed = ColorInfo{"LightRed", "91"}
+	// ColorLightGreen light green
+	ColorLightGreen = ColorInfo{"LightGreen", "92"}
+	// ColorLightYellow light yellow
+	ColorLightYellow = ColorInfo{"LightYellow", "93"}
+	// ColorLightBlue lightblue
+	ColorLightBlue = ColorInfo{"LightBlue", "94"}
+	// ColorLightMagenta light magenta
+	ColorLightMagenta = ColorInfo{"LightMagenta", "95"}
+	// ColorLightCyan light cyan
+	ColorLightCyan = ColorInfo{"LightCyan", "96"}
+	// ColorWhite white
+	ColorWhite = ColorInfo{"White", "97"}
+	// ColorBrightBlack bright black
+	ColorBrightBlack = ColorInfo{"BrightBlack", "30;1"}
+	// ColorBrightRed bright red
+	ColorBrightRed = ColorInfo{"BrightRed", "31;1"}
+	// ColorBrightGreen bright green
+	ColorBrightGreen = ColorInfo{"BrightGreen", "32;1"}
+	// ColorBrightYellow brightyellow
+	ColorBrightYellow = ColorInfo{"BrightYellow", "33;1"}
+	// ColorBrightBlue bright blue
+	ColorBrightBlue = ColorInfo{"BrightBlue", "34;1"}
+	// ColorBrightMagenta bright magenta
+	ColorBrightMagenta = ColorInfo{"BrightMagenta", "35;1"}
+	// ColorBrightCyan bright cyan
+	ColorBrightCyan = ColorInfo{"BrightCyan", "36;1"}
+	// ColorBrightWhite bright white
+	ColorBrightWhite = ColorInfo{"BrightWhite", "37;1"}
+
 	// KnownStyles know styles
 	KnownStyles = map[string]string{
 		"Bold":      "1",
@@ -193,7 +201,7 @@ var (
 	}
 	// KnownColors known colors
 	KnownColors = map[string]string{
-		"DefaultText":      "39",
+		"ForeDefaultText":  "39",
 		"ForeBlack":        "30",
 		"ForeRed":          "31",
 		"ForeGreen":        "32",
