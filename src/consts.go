@@ -7,6 +7,8 @@ type ColorInfo struct {
 }
 
 const (
+	/*====================================== Common =============================*/
+
 	// Empty empty string
 	Empty string = ""
 	// NewLine line terminator
@@ -25,6 +27,8 @@ const (
 
 	// StyleSeparator sign uses to separator styles
 	StyleSeparator = ","
+
+	/*====================================== Level names =============================*/
 
 	// Name name
 	Name = "Name"
@@ -105,6 +109,7 @@ const (
 )
 
 var (
+	/*====================================== Color names =============================*/
 
 	// ColorDefaultText default text color
 	ColorDefaultText = ColorInfo{"DefaultText", "39"}

@@ -15,6 +15,7 @@ type ConsoleLogger struct {
 	layoutNames      []string
 	layoutRepository LayoutRepository
 	configuration    *LoggerConfiguration
+	levelStyles      map[string][]string
 }
 
 // NewConsoleLogger create new console logger
@@ -145,20 +146,15 @@ func (logger *ConsoleLogger) printMessage(message string, level LogLevel) {
 }
 
 func (logger *ConsoleLogger) getLevelStyle(level LogLevel) []string {
-	styles := make([]string, 0)
-
-	switch level.Name {
-	case LevelDebug.Name:
-		styles = logger.configuration.ColorDebug.parseLevelStyles()
-	case LevelInfo.Name:
-		styles = logger.configuration.ColorInfo.parseLevelStyles()
-	case LevelWarn.Name:
-		styles = logger.configuration.ColorWarn.parseLevelStyles()
-	case LevelError.Name:
-		styles = logger.configuration.ColorError.parseLevelStyles()
-	case LevelFatal.Name:
-		styles = logger.configuration.ColorFatal.parseLevelStyles()
+	
+	if logger.levelStyles == nil {
+		logger.levelStyles = make(map[string][]string)
+		logger.levelStyles[LevelDebug.Name] = logger.configuration.ColorDebug.parseLevelStyles()
+		logger.levelStyles[LevelInfo.Name] = logger.configuration.ColorInfo.parseLevelStyles()
+		logger.levelStyles[LevelWarn.Name] = logger.configuration.ColorWarn.parseLevelStyles()
+		logger.levelStyles[LevelError.Name] = logger.configuration.ColorError.parseLevelStyles()
+		logger.levelStyles[LevelFatal.Name] = logger.configuration.ColorFatal.parseLevelStyles()
 	}
 
-	return styles
+	return  logger.levelStyles[level.Name]
 }

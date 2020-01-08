@@ -6,7 +6,6 @@ import (
 
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"golang.org/x/sys/windows"
 )
 
@@ -223,39 +222,21 @@ func TestColorfulConsole(t *testing.T) {
 	windows.GetConsoleMode(stdout, &originalMode)
 	windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
 
-	fmt.Println("\033[31mHello World\033[0m")
-	fmt.Println("\x1b[31mHello World\x1b[0m")
-	fmt.Println("\u001b[31mHello World\u001b[0m")
-	fmt.Println("\xbd\xb2\x3d\xbc\x20\xe2\x8c\x98")
-	fmt.Println("\033[1;34mTest color\033[0m")
-
 	formatter := NewFormatter()
 	content := "Hello colorful world"
 
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorGreen.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorYellow.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBlue.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorMagenta.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorCyan.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorWhite.Name))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorGreen.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorYellow.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBlue.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorMagenta.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorCyan.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorWhite.Value))
 
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightRed.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightGreen.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightYellow.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightBlue.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightMagenta.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightCyan.Name))
-	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightWhite.Name))
-}
-
-func TestParseLevelStyles(t *testing.T) {
-	style := LogLevelStyle{ColorDefaultText.Name, ColorRed.Value, "1 , 4 "}
-
-	actual := style.parseLevelStyles()
-
-	assert.Equal(t, 4, len(actual), "Style length should 4")
-	assert.Equal(t, "39", actual[0], "Style length should be 4")
-	assert.Equal(t, "48;5;31", actual[1], "Style length should be 4")
-	assert.Equal(t, "1", actual[2], "Style length should be 1")
-	assert.Equal(t, "4", actual[3], "Style length should be 4")
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightRed.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightGreen.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightYellow.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightBlue.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightMagenta.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightCyan.Value))
+	fmt.Println(formatter.FormatConsoleOutput(content, ColorBrightWhite.Value))
 }
