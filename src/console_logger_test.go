@@ -83,11 +83,11 @@ func TestConfigureLayouts(t *testing.T) {
 
 func TestWithCustomColorName(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.ColorDebug = LogLevelStyle{"DarkGray", "", ""}
-	configuration.ColorInfo = LogLevelStyle{"LightGreen", "", ""}
-	configuration.ColorWarn = LogLevelStyle{"LightYellow", "", ""}
-	configuration.ColorError = LogLevelStyle{"LightMagenta", "", ""}
-	configuration.ColorFatal = LogLevelStyle{"LightRed", "", ""}
+	configuration.DebugStyle = LogLevelStyle{"DarkGray", "", ""}
+	configuration.InfoStyle = LogLevelStyle{"LightGreen", "", ""}
+	configuration.WarnStyle = LogLevelStyle{"LightYellow", "", ""}
+	configuration.ErrorStyle = LogLevelStyle{"LightMagenta", "", ""}
+	configuration.FatalStyle = LogLevelStyle{"LightRed", "", ""}
 
 	logger := NewConsoleLogger("Testing").Configure(configuration)
 
@@ -100,11 +100,11 @@ func TestWithCustomColorName(t *testing.T) {
 
 func TestWithCustomColorCode(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.ColorDebug = LogLevelStyle{"237", "", ""}
-	configuration.ColorInfo = LogLevelStyle{"36", "", ""}
-	configuration.ColorWarn = LogLevelStyle{"226", "", ""}
-	configuration.ColorError = LogLevelStyle{"165", "", ""}
-	configuration.ColorFatal = LogLevelStyle{"197", "", ""}
+	configuration.DebugStyle = LogLevelStyle{"237", "", ""}
+	configuration.InfoStyle = LogLevelStyle{"36", "", ""}
+	configuration.WarnStyle = LogLevelStyle{"226", "", ""}
+	configuration.ErrorStyle = LogLevelStyle{"165", "", ""}
+	configuration.FatalStyle = LogLevelStyle{"197", "", ""}
 
 	logger := NewConsoleLogger("Testing").Configure(configuration)
 
@@ -117,11 +117,11 @@ func TestWithCustomColorCode(t *testing.T) {
 
 func TestWithCombineStyles(t *testing.T) {
 	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.ColorDebug = LogLevelStyle{"245", "24", ""}
-	configuration.ColorInfo = LogLevelStyle{"56", "234", "1"}
-	configuration.ColorWarn = LogLevelStyle{"226", "124", "4"}
-	configuration.ColorError = LogLevelStyle{"166", "232", "1,4"}
-	configuration.ColorFatal = LogLevelStyle{"196", "11", "7"}
+	configuration.DebugStyle = LogLevelStyle{"245", "24", ""}
+	configuration.InfoStyle = LogLevelStyle{"56", "234", "1"}
+	configuration.WarnStyle = LogLevelStyle{"226", "124", "4"}
+	configuration.ErrorStyle = LogLevelStyle{"166", "232", "1,4"}
+	configuration.FatalStyle = LogLevelStyle{"196", "11", "7"}
 
 	logger := NewConsoleLogger("Testing").Configure(configuration)
 

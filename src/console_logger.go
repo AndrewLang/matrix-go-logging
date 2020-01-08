@@ -146,15 +146,15 @@ func (logger *ConsoleLogger) printMessage(message string, level LogLevel) {
 }
 
 func (logger *ConsoleLogger) getLevelStyle(level LogLevel) []string {
-	
+
 	if logger.levelStyles == nil {
 		logger.levelStyles = make(map[string][]string)
-		logger.levelStyles[LevelDebug.Name] = logger.configuration.ColorDebug.parseLevelStyles()
-		logger.levelStyles[LevelInfo.Name] = logger.configuration.ColorInfo.parseLevelStyles()
-		logger.levelStyles[LevelWarn.Name] = logger.configuration.ColorWarn.parseLevelStyles()
-		logger.levelStyles[LevelError.Name] = logger.configuration.ColorError.parseLevelStyles()
-		logger.levelStyles[LevelFatal.Name] = logger.configuration.ColorFatal.parseLevelStyles()
+		logger.levelStyles[LevelDebug.Name] = logger.configuration.DebugStyle.parseLevelStyles()
+		logger.levelStyles[LevelInfo.Name] = logger.configuration.InfoStyle.parseLevelStyles()
+		logger.levelStyles[LevelWarn.Name] = logger.configuration.WarnStyle.parseLevelStyles()
+		logger.levelStyles[LevelError.Name] = logger.configuration.ErrorStyle.parseLevelStyles()
+		logger.levelStyles[LevelFatal.Name] = logger.configuration.FatalStyle.parseLevelStyles()
 	}
 
-	return  logger.levelStyles[level.Name]
+	return logger.levelStyles[level.Name]
 }

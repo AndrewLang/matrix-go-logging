@@ -2,16 +2,16 @@ package logging
 
 // LoggerConfiguration configuration for logger
 type LoggerConfiguration struct {
-	LayoutNames []string
-	FileName    string
-	FileSize    int64
-	MinLevel    int
-	UseColor    bool
-	ColorDebug  LogLevelStyle
-	ColorInfo   LogLevelStyle
-	ColorWarn   LogLevelStyle
-	ColorError  LogLevelStyle
-	ColorFatal  LogLevelStyle
+	LayoutNames []string      `json:"layoutNames`
+	FileName    string        `json:"fileName"`
+	FileSize    int64         `json:"fileSize"`
+	MinLevel    int           `json:"minLevel"`
+	UseColor    bool          `json:"useColor"`
+	DebugStyle  LogLevelStyle `json:"debugStyle"`
+	InfoStyle   LogLevelStyle `json:"infoStyle"`
+	WarnStyle   LogLevelStyle `json:"warnStyle"`
+	ErrorStyle  LogLevelStyle `json:"errorStyle"`
+	FatalStyle  LogLevelStyle `json:"fatalStyle"`
 }
 
 // NewLoggerConfiguration create new configuration
@@ -22,10 +22,10 @@ func NewLoggerConfiguration(layouts []string) *LoggerConfiguration {
 		FileSize:    DefaultLogFileSize,
 		MinLevel:    LevelAll.Value,
 		UseColor:    true,
-		ColorDebug:  LogLevelStyle{ColorDefaultText.Name, "", ""},
-		ColorInfo:   LogLevelStyle{ColorGreen.Name, "", ""},
-		ColorWarn:   LogLevelStyle{ColorYellow.Name, "", ""},
-		ColorError:  LogLevelStyle{ColorMagenta.Name, "", ""},
-		ColorFatal:  LogLevelStyle{ColorRed.Name, "", ""},
+		DebugStyle:  LogLevelStyle{ColorDefaultText.Name, "", ""},
+		InfoStyle:   LogLevelStyle{ColorGreen.Name, "", ""},
+		WarnStyle:   LogLevelStyle{ColorYellow.Name, "", ""},
+		ErrorStyle:  LogLevelStyle{ColorMagenta.Name, "", ""},
+		FatalStyle:  LogLevelStyle{ColorRed.Name, "", ""},
 	}
 }

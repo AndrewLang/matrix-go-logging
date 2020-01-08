@@ -1,13 +1,10 @@
 package logging
 
-import (	
+import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
 )
-
-
 
 func TestParseLevelStyles(t *testing.T) {
 	style := LogLevelStyle{ColorDefaultText.Name, ColorRed.Value, "1 , 4 "}

@@ -25,6 +25,6 @@ var (
 
 // LogLevel represent level of log
 type LogLevel struct {
-	Name  string
-	Value int
+	Name  string `json:"name"`
+	Value int    `json:"value"`
 }
