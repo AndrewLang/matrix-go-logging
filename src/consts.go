@@ -1,5 +1,6 @@
 package logging
 
+// ColorInfo descrble console color
 type ColorInfo struct {
 	Name  string
 	Value string
