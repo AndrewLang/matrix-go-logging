@@ -217,7 +217,7 @@ func (logger *JSONFileLogger) Close() ILogger {
 // closeJSONLogger close logger resources
 func closeJSONLogger(logger *JSONFileLogger) {
 	logger.writeFile()
-	
+
 	if logger.file != nil {
 		logger.file.Sync()
 		logger.file.Close()

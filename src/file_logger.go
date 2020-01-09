@@ -171,7 +171,7 @@ func (logger *FileLogger) Close() ILogger {
 }
 
 func closeFileLogger(logger *FileLogger) {
-	logger.writeFile()	
+	logger.writeFile()
 	logger.buffer.Reset()
 	if logger.file != nil {
 		logger.file.Sync()
