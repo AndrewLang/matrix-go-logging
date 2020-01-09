@@ -28,6 +28,22 @@ func defaultLogTargetConfigs() *LogTargetConfigurations {
 	return config
 }
 
+func composeLogTargetConfigs() *LogTargetConfigurations {
+	config := NewLogTargetConfigurations()
+	config.AddTarget(defaultLogTargetConfig())
+
+	fileConfig := NewLogTargetConfiguration("File", FileLoggerName, []string{Time, Level, Name, Indent, Message})
+	fileConfig.Configuration.FileName = "./test/compose_log.txt"
+
+	config.AddTarget(fileConfig)
+
+	jsonConfig := NewLogTargetConfiguration("JsonFile", JSONFileLoggerName, []string{Message})
+	jsonConfig.Configuration.FileName = "./test/compose_log.json"
+	jsonConfig.Configuration.MinLevel = LevelFatal.Value
+	config.AddTarget(jsonConfig)
+
+	return config
+}
 func verifyLoggerConfiguration(t *testing.T, configuration *LoggerConfiguration) {
 	assert.Equal(t, "", configuration.FileName, "")
 	assert.Equal(t, 0, configuration.MinLevel, "")

@@ -17,6 +17,8 @@ const (
 	OneMega int64 = 1024 * 1024
 	// DefaultLogFileSize defautl log file size
 	DefaultLogFileSize int64 = OneMega * 2
+	// DefaultLayoutPadding padding
+	DefaultLayoutPadding int = 8
 
 	// LeftBracket left bracket
 	LeftBracket = "["

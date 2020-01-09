@@ -35,13 +35,15 @@ type LogLevelLayout struct {
 
 // NewLogLevelLayout create level layout
 func NewLogLevelLayout() *LogLevelLayout {
-	return &LogLevelLayout{8}
+	return &LogLevelLayout{
+		Padding: DefaultLayoutPadding,
+	}
 }
 
 func (l *LogLevelLayout) String(message LogMessage) string {
 	// format use right padding
 	result := fmt.Sprintf("%s%s%s", LeftBracket, message.Level, RightBracket)
-	result = PaddingRight(result, " ", l.Padding)
+	result = PaddingRight(result, Space, l.Padding)
 	return result
 }
 
@@ -49,16 +51,21 @@ func (l *LogLevelLayout) String(message LogMessage) string {
 
 // LogNameLayout name layout
 type LogNameLayout struct {
+	Padding int
 }
 
 // NewLogNameLayout new layout
 func NewLogNameLayout() LogNameLayout {
-	return LogNameLayout{}
+	return LogNameLayout{
+		Padding: DefaultLayoutPadding,
+	}
 }
 
 //
 func (l LogNameLayout) String(message LogMessage) string {
-	return fmt.Sprintf("%s%s%s", LeftBracket, message.Name, RightBracket)
+	result := fmt.Sprintf("%s%s%s", LeftBracket, message.Name, RightBracket)
+	result = PaddingRight(result, Space, l.Padding)
+	return result
 }
 
 // ======================================================================================

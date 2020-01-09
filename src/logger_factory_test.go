@@ -2,6 +2,7 @@ package logging
 
 import (
 	// "fmt"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,23 +16,27 @@ func TestNewLoggerFactory(t *testing.T) {
 }
 
 func TestConfigureLoggerFactory(t *testing.T) {
-	configuration := defaultLogginConfig()
+	config := defaultLogTargetConfigs()
 
-	factory := NewLoggerFactory().Configure(configuration)
+	factory := NewLoggerFactory().Configure(config)
 
-	assert.Equal(t, "", factory.Configuration.FileName, "")
-	assert.Equal(t, 0, factory.Configuration.MinLevel, "")
-	assert.Equal(t, int64(2097152), factory.Configuration.FileSize, "")
-	assert.Equal(t, true, factory.Configuration.UseColor, "")
-	assert.Equal(t, "Time", factory.Configuration.LayoutNames[0], "")
-	assert.Equal(t, "Level", factory.Configuration.LayoutNames[1], "")
-	assert.Equal(t, "Name", factory.Configuration.LayoutNames[2], "")
-	assert.Equal(t, "Indent", factory.Configuration.LayoutNames[3], "")
-	assert.Equal(t, "Message", factory.Configuration.LayoutNames[4], "")
+	configuration := factory.Configuration.GetTarget("Test")
+
+	assert.NotNil(t, configuration)
+
+	assert.Equal(t, "", configuration.Configuration.FileName, "")
+	assert.Equal(t, 0, configuration.Configuration.MinLevel, "")
+	assert.Equal(t, int64(2097152), configuration.Configuration.FileSize, "")
+	assert.Equal(t, true, configuration.Configuration.UseColor, "")
+	assert.Equal(t, "Time", configuration.Configuration.LayoutNames[0], "")
+	assert.Equal(t, "Level", configuration.Configuration.LayoutNames[1], "")
+	assert.Equal(t, "Name", configuration.Configuration.LayoutNames[2], "")
+	assert.Equal(t, "Indent", configuration.Configuration.LayoutNames[3], "")
+	assert.Equal(t, "Message", configuration.Configuration.LayoutNames[4], "")
 }
 
 func TestCreateLogger(t *testing.T) {
-	configuration := defaultLogginConfig()
+	configuration := defaultLogTargetConfigs()
 	factory := NewLoggerFactory().Configure(configuration)
 	logger, err := factory.Create(ConsoleLoggerName)
 
@@ -47,12 +52,33 @@ func TestCreateLogger(t *testing.T) {
 		Fatal(content)
 }
 
-func TestCreateLoggerNotFound(t *testing.T) {
-	configuration := defaultLogginConfig()
+func TestCreateComposeLoggerFromConfig(t *testing.T) {
+	configuration := composeLogTargetConfigs()
 	factory := NewLoggerFactory().Configure(configuration)
-	_, err := factory.Create("Mock")
+	logger, err := factory.Create(ConsoleLoggerName)
 
-	assert.NotNil(t, err, "Error should not be nil")
+	assert.Nil(t, err, "Error should be nil")
+	assert.NotNil(t, logger, "Logger should not be nil")
+
+	for i := 0; i < 50; i++ {
+		content := "Logger created from factory for output multiple target " + strconv.Itoa(i)
+		logger.Debug(content).
+			Info(content).
+			Warn(content).
+			Error(content).
+			Fatal(content)
+	}
+
+	logger.Close()
+}
+
+func TestCreateLoggerNotFound(t *testing.T) {
+	configuration := defaultLogTargetConfigs()
+	factory := NewLoggerFactory().Configure(configuration)
+	logger, err := factory.Create("Mock")
+
+	assert.NotNil(t, logger, "Error should not be nil")
+	assert.Nil(t, err)
 }
 
 func TestCreateLoggerWithoutConfig(t *testing.T) {

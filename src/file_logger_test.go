@@ -76,7 +76,7 @@ func TestFileLoggerDebugSlowLogging(t *testing.T) {
 
 	logger.StartGroup("Start Indent").StartGroup("Indent 2")
 
-	for i := 0; i < 90; i++ {
+	for i := 0; i < 95; i++ {
 		logger.Info(MessageContent, i, i*2, true, false, exception)
 	}
 	logger.EndGroup().Close()

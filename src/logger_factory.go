@@ -5,7 +5,7 @@ type LoggerCreator func(name string) ILogger
 
 // LoggerFactory logger factory
 type LoggerFactory struct {
-	Configuration *LoggerConfiguration
+	Configuration *LogTargetConfigurations
 	creators      map[string]LoggerCreator
 }
 
@@ -35,7 +35,7 @@ func (factory *LoggerFactory) RegisterCreator(name string, creator LoggerCreator
 }
 
 // Configure Configure factory
-func (factory *LoggerFactory) Configure(config *LoggerConfiguration) *LoggerFactory {
+func (factory *LoggerFactory) Configure(config *LogTargetConfigurations) *LoggerFactory {
 	factory.Configuration = config
 	return factory
 }
@@ -46,13 +46,18 @@ func (factory *LoggerFactory) Create(name string) (ILogger, error) {
 		return nil, NewException("Factory configuration is not configured. ")
 	}
 
-	creator, ok := factory.creators[name]
-	if !ok {
-		return nil, NewException("No creator found for logger.")
+	composeLogger := CreateComposeLogger(name)
+
+	for _, target := range factory.Configuration.Targets {
+		creator, ok := factory.creators[target.Type]
+		if !ok {
+			continue
+		}
+
+		logger := creator(name)
+		logger.Configure(target.Configuration)
+		composeLogger.AddLogger(logger)
 	}
 
-	logger := creator(name)
-	logger.Configure(factory.Configuration)
-
-	return logger, nil
+	return composeLogger, nil
 }

@@ -16,6 +16,15 @@ func NewComposeLogger(name string) ILogger {
 	return logger
 }
 
+// CreateComposeLogger create new compose logger
+func CreateComposeLogger(name string) *ComposeLogger {
+	logger := &ComposeLogger{
+		Loggers: make([]ILogger, 0),
+		name:    name,
+	}
+	return logger
+}
+
 // AddLogger add a logger
 func (logger *ComposeLogger) AddLogger(instance ILogger) *ComposeLogger {
 
