@@ -36,16 +36,3 @@ type ILogger interface {
 	// Fatal write message to fatal level
 	Fatal(message string, objects ...interface{}) ILogger
 }
-
-// // IFake fake
-// type IFake interface {
-// 	Debug(message string) *IFake
-// }
-
-// // Fake fake
-// type Fake struct { }
-
-// // Debug debug
-// func (fake *Fake) Debug( message string ) *IFake {
-// 	return fake
-// }
