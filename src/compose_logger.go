@@ -4,19 +4,21 @@ package logging
 type ComposeLogger struct {
 	Loggers       []ILogger
 	configuration *LoggerConfiguration
+	name          string
 }
 
 // NewComposeLogger create new compose logger
-func NewComposeLogger() ILogger {
+func NewComposeLogger(name string) ILogger {
 	logger := &ComposeLogger{
 		Loggers: make([]ILogger, 0),
+		name:    name,
 	}
 	return logger
 }
 
 // AddLogger add a logger
 func (logger *ComposeLogger) AddLogger(instance ILogger) *ComposeLogger {
-	
+
 	logger.Loggers = append(logger.Loggers, instance)
 	return logger
 }

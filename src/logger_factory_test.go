@@ -21,7 +21,7 @@ func TestNewLoggerFactory(t *testing.T) {
 	factory := NewLoggerFactory()
 	length := len(factory.creators)
 
-	assert.Equal(t, 3, length, "There should be 3 creators")
+	assert.Equal(t, 4, length, "There should be 4 creators")
 }
 
 func TestConfigureLoggerFactory(t *testing.T) {
@@ -79,5 +79,5 @@ func TestRegisterCreator(t *testing.T) {
 		return NewConsoleLogger(name)
 	})
 	length := len(factory.creators)
-	assert.Equal(t, 4, length, "There should be  creators")
+	assert.Equal(t, 5, length, "There should be 5 creators")
 }

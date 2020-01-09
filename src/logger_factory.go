@@ -21,6 +21,8 @@ func NewLoggerFactory() *LoggerFactory {
 		return NewFileLogger(name)
 	}).RegisterCreator(JSONFileLoggerName, func(name string) ILogger {
 		return NewJSONFileLogger(name)
+	}).RegisterCreator(ComposeLoggerName, func(name string) ILogger {
+		return NewComposeLogger(name)
 	})
 
 	return factory

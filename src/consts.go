@@ -36,6 +36,8 @@ const (
 	FileLoggerName = "File"
 	// JSONFileLoggerName json file logger
 	JSONFileLoggerName = "JsonFile"
+	// ComposeLoggerName name compose logger
+	ComposeLoggerName = "Compose"
 
 	/*====================================== Level names =============================*/
 

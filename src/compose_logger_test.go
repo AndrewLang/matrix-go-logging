@@ -19,7 +19,7 @@ func createConfiguredComposeLogger() ComposeLogger {
 	logger := ComposeLogger{
 		Loggers: make([]ILogger, 0),
 	}
-		
+
 	logger.AddLogger(NewConsoleLogger("Compose Console"))
 
 	logger.Configure(config)
@@ -28,7 +28,7 @@ func createConfiguredComposeLogger() ComposeLogger {
 }
 
 func TestNewComposeLogger(t *testing.T) {
-	logger := NewComposeLogger()
+	logger := NewComposeLogger("Testing")
 
 	assert.NotNil(t, logger, "Logger should not be nil")
 }
