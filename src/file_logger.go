@@ -25,7 +25,7 @@ type FileLogger struct {
 }
 
 // NewFileLogger create new file logger
-func NewFileLogger(name string) *FileLogger {
+func NewFileLogger(name string) ILogger {
 	logger := &FileLogger{
 		Name:             name,
 		Formatter:        Formatter{},
@@ -47,21 +47,26 @@ func NewFileLogger(name string) *FileLogger {
 }
 
 // Configure configure logger
-func (logger *FileLogger) Configure(config *LoggerConfiguration) *FileLogger {
+func (logger *FileLogger) Configure(config *LoggerConfiguration) ILogger {
 	logger.fileName = config.FileName
 	logger.fileSize = config.FileSize
 	logger.configuration = config
 	return logger
 }
 
+// GetConfiguration get configuration
+func (logger *FileLogger) GetConfiguration() *LoggerConfiguration {
+	return logger.configuration
+}
+
 // StartGroup start a group
-func (logger *FileLogger) StartGroup(name string) *FileLogger {
+func (logger *FileLogger) StartGroup(name string) ILogger {
 	logger.indentLevel++
 	return logger
 }
 
 // EndGroup end a group
-func (logger *FileLogger) EndGroup() *FileLogger {
+func (logger *FileLogger) EndGroup() ILogger {
 	logger.indentLevel--
 	if logger.indentLevel < 0 {
 		logger.indentLevel = 0
@@ -70,7 +75,7 @@ func (logger *FileLogger) EndGroup() *FileLogger {
 }
 
 // ResetGroup reset
-func (logger *FileLogger) ResetGroup() *FileLogger {
+func (logger *FileLogger) ResetGroup() ILogger {
 	logger.indentLevel = 0
 	return logger
 }
@@ -89,35 +94,35 @@ func (logger *FileLogger) WriteMessage(level string, message string, objects ...
 }
 
 // Debug write at debug level
-func (logger *FileLogger) Debug(message string, objects ...interface{}) *FileLogger {
+func (logger *FileLogger) Debug(message string, objects ...interface{}) ILogger {
 	content := logger.WriteMessage(LevelDebug.Name, message, objects...)
 	logger.printMessage(content)
 	return logger
 }
 
 // Info write at info level
-func (logger *FileLogger) Info(message string, objects ...interface{}) *FileLogger {
+func (logger *FileLogger) Info(message string, objects ...interface{}) ILogger {
 	content := logger.WriteMessage(LevelInfo.Name, message, objects...)
 	logger.printMessage(content)
 	return logger
 }
 
 // Warn write at warn level
-func (logger *FileLogger) Warn(message string, objects ...interface{}) *FileLogger {
+func (logger *FileLogger) Warn(message string, objects ...interface{}) ILogger {
 	content := logger.WriteMessage(LevelWarn.Name, message, objects...)
 	logger.printMessage(content)
 	return logger
 }
 
 // Error write at error level
-func (logger *FileLogger) Error(message string, objects ...interface{}) *FileLogger {
+func (logger *FileLogger) Error(message string, objects ...interface{}) ILogger {
 	content := logger.WriteMessage(LevelError.Name, message, objects...)
 	logger.printMessage(content)
 	return logger
 }
 
 // Fatal write at fatal level
-func (logger *FileLogger) Fatal(message string, objects ...interface{}) *FileLogger {
+func (logger *FileLogger) Fatal(message string, objects ...interface{}) ILogger {
 	content := logger.WriteMessage(LevelFatal.Name, message, objects...)
 	logger.printMessage(content)
 	return logger
@@ -160,8 +165,9 @@ func (logger *FileLogger) initialize() {
 }
 
 // Close close logger
-func (logger *FileLogger) Close() {
+func (logger *FileLogger) Close() ILogger {
 	closeFileLogger(logger)
+	return logger
 }
 
 func closeFileLogger(logger *FileLogger) {

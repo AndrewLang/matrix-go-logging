@@ -34,7 +34,7 @@ type JSONFileLogger struct {
 }
 
 // NewJSONFileLogger create new file logger
-func NewJSONFileLogger(name string) *JSONFileLogger {
+func NewJSONFileLogger(name string) ILogger {
 	logger := &JSONFileLogger{
 		Name:             name,
 		Formatter:        Formatter{},
@@ -56,7 +56,7 @@ func NewJSONFileLogger(name string) *JSONFileLogger {
 }
 
 // Configure configure logger
-func (logger *JSONFileLogger) Configure(config *LoggerConfiguration) *JSONFileLogger {
+func (logger *JSONFileLogger) Configure(config *LoggerConfiguration) ILogger {
 	logger.layoutNames = config.LayoutNames
 	logger.fileName = config.FileName
 	logger.fileSize = config.FileSize
@@ -64,14 +64,19 @@ func (logger *JSONFileLogger) Configure(config *LoggerConfiguration) *JSONFileLo
 	return logger
 }
 
+// GetConfiguration get configuration
+func (logger *JSONFileLogger) GetConfiguration() *LoggerConfiguration {
+	return logger.configuration
+}
+
 // StartGroup start a group
-func (logger *JSONFileLogger) StartGroup(name string) *JSONFileLogger {
+func (logger *JSONFileLogger) StartGroup(name string) ILogger {
 	logger.indentLevel++
 	return logger
 }
 
 // EndGroup end a group
-func (logger *JSONFileLogger) EndGroup() *JSONFileLogger {
+func (logger *JSONFileLogger) EndGroup() ILogger {
 	logger.indentLevel--
 	if logger.indentLevel < 0 {
 		logger.indentLevel = 0
@@ -80,7 +85,7 @@ func (logger *JSONFileLogger) EndGroup() *JSONFileLogger {
 }
 
 // ResetGroup reset
-func (logger *JSONFileLogger) ResetGroup() *JSONFileLogger {
+func (logger *JSONFileLogger) ResetGroup() ILogger {
 	logger.indentLevel = 0
 	return logger
 }
@@ -106,7 +111,7 @@ func (logger *JSONFileLogger) WriteMessage(level string, message string, objects
 }
 
 // Debug write at debug level
-func (logger *JSONFileLogger) Debug(message string, objects ...interface{}) *JSONFileLogger {
+func (logger *JSONFileLogger) Debug(message string, objects ...interface{}) ILogger {
 
 	if logger.IsEnable(LevelDebug) {
 		content := logger.WriteMessage(LevelDebug.Name, message, objects...)
@@ -118,7 +123,7 @@ func (logger *JSONFileLogger) Debug(message string, objects ...interface{}) *JSO
 }
 
 // Info write at info level
-func (logger *JSONFileLogger) Info(message string, objects ...interface{}) *JSONFileLogger {
+func (logger *JSONFileLogger) Info(message string, objects ...interface{}) ILogger {
 
 	if logger.IsEnable(LevelInfo) {
 		content := logger.WriteMessage(LevelInfo.Name, message, objects...)
@@ -130,7 +135,7 @@ func (logger *JSONFileLogger) Info(message string, objects ...interface{}) *JSON
 }
 
 // Warn write at warn level
-func (logger *JSONFileLogger) Warn(message string, objects ...interface{}) *JSONFileLogger {
+func (logger *JSONFileLogger) Warn(message string, objects ...interface{}) ILogger {
 
 	if logger.IsEnable(LevelWarn) {
 		content := logger.WriteMessage(LevelWarn.Name, message, objects...)
@@ -142,7 +147,7 @@ func (logger *JSONFileLogger) Warn(message string, objects ...interface{}) *JSON
 }
 
 // Error write at error level
-func (logger *JSONFileLogger) Error(message string, objects ...interface{}) *JSONFileLogger {
+func (logger *JSONFileLogger) Error(message string, objects ...interface{}) ILogger {
 
 	if logger.IsEnable(LevelError) {
 		content := logger.WriteMessage(LevelError.Name, message, objects...)
@@ -154,7 +159,7 @@ func (logger *JSONFileLogger) Error(message string, objects ...interface{}) *JSO
 }
 
 // Fatal write at fatal level
-func (logger *JSONFileLogger) Fatal(message string, objects ...interface{}) *JSONFileLogger {
+func (logger *JSONFileLogger) Fatal(message string, objects ...interface{}) ILogger {
 
 	if logger.IsEnable(LevelFatal) {
 		content := logger.WriteMessage(LevelFatal.Name, message, objects...)
@@ -204,8 +209,9 @@ func (logger *JSONFileLogger) initialize() {
 }
 
 // Close close logger
-func (logger *JSONFileLogger) Close() {
+func (logger *JSONFileLogger) Close() ILogger {
 	closeJSONLogger(logger)
+	return logger
 }
 
 // closeJSONLogger close logger resources

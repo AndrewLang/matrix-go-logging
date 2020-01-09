@@ -13,7 +13,7 @@ func TestGenerateFileName(t *testing.T) {
 
 	logger := NewFileLogger("SlowMessageGenerator").Configure(configuration)
 
-	actual := generateFileName(logger.fileName)
+	actual := generateFileName(logger.GetConfiguration().FileName)
 
 	assert.Equal(t, "1000-batch_1.txt", actual, "New log file name is wrong")
 }

@@ -28,6 +28,15 @@ const (
 	// StyleSeparator sign uses to separator styles
 	StyleSeparator = ","
 
+	/*====================================== Logger names =============================*/
+
+	// ConsoleLoggerName console logger
+	ConsoleLoggerName = "Console"
+	// FileLoggerName file logger
+	FileLoggerName = "File"
+	// JSONFileLoggerName json file logger
+	JSONFileLoggerName = "JsonFile"
+
 	/*====================================== Level names =============================*/
 
 	// Name name

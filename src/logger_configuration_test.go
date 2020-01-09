@@ -1,7 +1,6 @@
 package logging
 
 import (
-	
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -16,7 +15,6 @@ func TestSerializeJsonConfiguration(t *testing.T) {
 
 	json := configuration.ToJSON()
 
-		
 	logger := NewConsoleLogger("Test_Env").Configure(configuration)
 	logger.Info("Json logger configuration").
 		Info(json)

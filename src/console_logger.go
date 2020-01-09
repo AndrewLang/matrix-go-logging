@@ -19,8 +19,8 @@ type ConsoleLogger struct {
 }
 
 // NewConsoleLogger create new console logger
-func NewConsoleLogger(name string) *ConsoleLogger {
-	logger := ConsoleLogger{
+func NewConsoleLogger(name string) ILogger {
+	logger := &ConsoleLogger{
 		Name:             name,
 		Formatter:        Formatter{},
 		indentLevel:      0,
@@ -38,24 +38,29 @@ func NewConsoleLogger(name string) *ConsoleLogger {
 	windows.GetConsoleMode(stdout, &originalMode)
 	windows.SetConsoleMode(stdout, originalMode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING)
 
-	return &logger
+	return logger
 }
 
 // Configure configure logger
-func (logger *ConsoleLogger) Configure(config *LoggerConfiguration) *ConsoleLogger {
+func (logger *ConsoleLogger) Configure(config *LoggerConfiguration) ILogger {
 	logger.layoutNames = config.LayoutNames
 	logger.configuration = config
 	return logger
 }
 
+// GetConfiguration get configuration
+func (logger *ConsoleLogger) GetConfiguration() *LoggerConfiguration {
+	return logger.configuration
+}
+
 // StartGroup start a group
-func (logger *ConsoleLogger) StartGroup(name string) *ConsoleLogger {
+func (logger *ConsoleLogger) StartGroup(name string) ILogger {
 	logger.indentLevel++
 	return logger
 }
 
 // EndGroup end a group
-func (logger *ConsoleLogger) EndGroup() *ConsoleLogger {
+func (logger *ConsoleLogger) EndGroup() ILogger {
 	logger.indentLevel--
 	if logger.indentLevel < 0 {
 		logger.indentLevel = 0
@@ -65,7 +70,7 @@ func (logger *ConsoleLogger) EndGroup() *ConsoleLogger {
 }
 
 // ResetGroup reset
-func (logger *ConsoleLogger) ResetGroup() *ConsoleLogger {
+func (logger *ConsoleLogger) ResetGroup() ILogger {
 	logger.indentLevel = 0
 	return logger
 }
@@ -86,7 +91,7 @@ func (logger *ConsoleLogger) WriteMessage(level string, message string, objects 
 }
 
 // Debug write at debug level
-func (logger *ConsoleLogger) Debug(message string, objects ...interface{}) *ConsoleLogger {
+func (logger *ConsoleLogger) Debug(message string, objects ...interface{}) ILogger {
 
 	content := logger.WriteMessage(LevelDebug.Name, message, objects...)
 
@@ -96,7 +101,7 @@ func (logger *ConsoleLogger) Debug(message string, objects ...interface{}) *Cons
 }
 
 // Info write at info level
-func (logger *ConsoleLogger) Info(message string, objects ...interface{}) *ConsoleLogger {
+func (logger *ConsoleLogger) Info(message string, objects ...interface{}) ILogger {
 
 	content := logger.WriteMessage(LevelInfo.Name, message, objects...)
 
@@ -106,7 +111,7 @@ func (logger *ConsoleLogger) Info(message string, objects ...interface{}) *Conso
 }
 
 // Warn write at warn level
-func (logger *ConsoleLogger) Warn(message string, objects ...interface{}) *ConsoleLogger {
+func (logger *ConsoleLogger) Warn(message string, objects ...interface{}) ILogger {
 
 	content := logger.WriteMessage(LevelWarn.Name, message, objects...)
 
@@ -116,7 +121,7 @@ func (logger *ConsoleLogger) Warn(message string, objects ...interface{}) *Conso
 }
 
 // Error write at error level
-func (logger *ConsoleLogger) Error(message string, objects ...interface{}) *ConsoleLogger {
+func (logger *ConsoleLogger) Error(message string, objects ...interface{}) ILogger {
 
 	content := logger.WriteMessage(LevelError.Name, message, objects...)
 
@@ -126,7 +131,7 @@ func (logger *ConsoleLogger) Error(message string, objects ...interface{}) *Cons
 }
 
 // Fatal write at fatal level
-func (logger *ConsoleLogger) Fatal(message string, objects ...interface{}) *ConsoleLogger {
+func (logger *ConsoleLogger) Fatal(message string, objects ...interface{}) ILogger {
 
 	content := logger.WriteMessage(LevelFatal.Name, message, objects...)
 
@@ -135,6 +140,10 @@ func (logger *ConsoleLogger) Fatal(message string, objects ...interface{}) *Cons
 	return logger
 }
 
+// Close close logger
+func (logger *ConsoleLogger) Close() ILogger {
+	return logger
+}
 func (logger *ConsoleLogger) printMessage(message string, level LogLevel) {
 	if logger.configuration.UseColor {
 		style := logger.getLevelStyle(level)
