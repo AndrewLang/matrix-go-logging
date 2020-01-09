@@ -7,16 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func defaultLogginConfig() *LoggerConfiguration {
-	configuration := NewLoggerConfiguration([]string{Time, Level, Name, Indent, Message})
-	configuration.DebugStyle = LogLevelStyle{"245", "24", ""}
-	configuration.InfoStyle = LogLevelStyle{"85", "", "1"}
-	configuration.WarnStyle = LogLevelStyle{"226", "124", "4"}
-	configuration.ErrorStyle = LogLevelStyle{"166", "232", "1,4"}
-	configuration.FatalStyle = LogLevelStyle{"196", "11", "7"}
-
-	return configuration
-}
 func TestNewLoggerFactory(t *testing.T) {
 	factory := NewLoggerFactory()
 	length := len(factory.creators)

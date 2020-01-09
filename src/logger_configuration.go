@@ -45,3 +45,31 @@ func (config *LoggerConfiguration) ToJSON() string {
 func (config *LoggerConfiguration) FromJSON(jsonContent string) {
 	json.Unmarshal([]byte(jsonContent), config)
 }
+
+/*=======================================================================*/
+
+// LogTargetConfiguration configure log output
+type LogTargetConfiguration struct {
+	Name          string               `json:"name"`
+	Configuration *LoggerConfiguration `json:"config"`
+}
+
+// NewLogTargetConfiguration create a new log target configuration
+func NewLogTargetConfiguration(name string, layouts []string) *LogTargetConfiguration {
+	return &LogTargetConfiguration{
+		Name:          name,
+		Configuration: NewLoggerConfiguration(layouts),
+	}
+}
+
+// ToJSON serialize to json string
+func (config *LogTargetConfiguration) ToJSON() string {
+	content, _ := json.MarshalIndent(config, "", "\t")
+
+	return string(content)
+}
+
+// FromJSON deserialize from json string
+func (config *LogTargetConfiguration) FromJSON(jsonContent string) {
+	json.Unmarshal([]byte(jsonContent), config)
+}
