@@ -51,13 +51,15 @@ func (config *LoggerConfiguration) FromJSON(jsonContent string) {
 // LogTargetConfiguration configure log output
 type LogTargetConfiguration struct {
 	Name          string               `json:"name"`
+	Type          string               `json:"type"`
 	Configuration *LoggerConfiguration `json:"config"`
 }
 
 // NewLogTargetConfiguration create a new log target configuration
-func NewLogTargetConfiguration(name string, layouts []string) *LogTargetConfiguration {
+func NewLogTargetConfiguration(name string, loggerType string, layouts []string) *LogTargetConfiguration {
 	return &LogTargetConfiguration{
 		Name:          name,
+		Type:          loggerType,
 		Configuration: NewLoggerConfiguration(layouts),
 	}
 }
@@ -71,5 +73,47 @@ func (config *LogTargetConfiguration) ToJSON() string {
 
 // FromJSON deserialize from json string
 func (config *LogTargetConfiguration) FromJSON(jsonContent string) {
+	json.Unmarshal([]byte(jsonContent), config)
+}
+
+/*=======================================================================*/
+
+// LogTargetConfigurations configuration for log targets
+type LogTargetConfigurations struct {
+	Targets []*LogTargetConfiguration `json:"targets"`
+}
+
+// NewLogTargetConfigurations new configuration
+func NewLogTargetConfigurations() *LogTargetConfigurations {
+	return &LogTargetConfigurations{
+		Targets: make([]*LogTargetConfiguration, 0),
+	}
+}
+
+// AddTarget add target configuration
+func (config *LogTargetConfigurations) AddTarget(target *LogTargetConfiguration) *LogTargetConfigurations {
+	config.Targets = append(config.Targets, target)
+	return config
+}
+
+// GetTarget get target by name
+func (config *LogTargetConfigurations) GetTarget(name string) *LogTargetConfiguration {
+	for _, item := range config.Targets {
+		if item.Name == name {
+			return item
+		}
+	}
+	return nil
+}
+
+// ToJSON serialize to json string
+func (config *LogTargetConfigurations) ToJSON() string {
+	content, _ := json.MarshalIndent(config, "", "\t")
+
+	return string(content)
+}
+
+// FromJSON deserialize from json string
+func (config *LogTargetConfigurations) FromJSON(jsonContent string) {
 	json.Unmarshal([]byte(jsonContent), config)
 }

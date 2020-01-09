@@ -17,8 +17,15 @@ func defaultLogginConfig() *LoggerConfiguration {
 }
 
 func defaultLogTargetConfig() *LogTargetConfiguration {
-	configuration := NewLogTargetConfiguration("Test", []string{Time, Level, Name, Indent, Message})
+	configuration := NewLogTargetConfiguration("Test", ConsoleLoggerName, []string{Time, Level, Name, Indent, Message})
 	return configuration
+}
+
+func defaultLogTargetConfigs() *LogTargetConfigurations {
+	config := NewLogTargetConfigurations()
+	config.AddTarget(defaultLogTargetConfig())
+
+	return config
 }
 
 func verifyLoggerConfiguration(t *testing.T, configuration *LoggerConfiguration) {
@@ -178,4 +185,136 @@ func TestFromJsonLogTargetConfiguration(t *testing.T) {
 	logger := NewConsoleLogger("Test_Env").Configure(configuration.Configuration)
 	logger.Info("Log target configuration").
 		Info("", configuration.Name, configuration.Configuration)
+}
+
+func TestNewLogTargetConfigurations(t *testing.T) {
+	config := NewLogTargetConfigurations()
+
+	assert.NotNil(t, config)
+	assert.Equal(t, 0, len(config.Targets))
+}
+
+func TestLogTargetConfigurationsAddTarget(t *testing.T) {
+	config := defaultLogTargetConfigs()
+	config.AddTarget(NewLogTargetConfiguration("Test_Json", JSONFileLoggerName, []string{Time, Level, Name, Message}))
+
+	json := config.ToJSON()
+
+	logger := NewConsoleLogger("Test_Env").Configure(config.Targets[0].Configuration)
+	logger.Info("Log target configuration").
+		Info(json)
+}
+
+func TestLogTargetConfigurationsToJSON(t *testing.T) {
+	config := defaultLogTargetConfigs()
+	json := config.ToJSON()
+
+	logger := NewConsoleLogger("Test_Env").Configure(config.Targets[0].Configuration)
+	logger.Info("Log target configuration").
+		Info(json)
+}
+
+func TestLogTargetConfigurationsFromJSON(t *testing.T) {
+	content := ` {
+	"targets": [
+			{
+					"name": "Test",
+					"type": "Console",
+					"config": {
+							"LayoutNames": [
+									"Time",
+									"Level",
+									"Name",
+									"Indent",
+									"Message"
+							],
+							"fileName": "",
+							"fileSize": 2097152,
+							"minLevel": 0,
+							"useColor": true,
+							"debugStyle": {
+								"foreground": "245",
+								"background": "24",
+								"styles": ""
+						},
+						"infoStyle": {
+								"foreground": "56",
+								"background": "234",
+								"styles": "1"
+						},
+						"warnStyle": {
+								"foreground": "226",
+								"background": "124",
+								"styles": "4"
+						},
+						"errorStyle": {
+								"foreground": "166",
+								"background": "232",
+								"styles": "1,4"
+						},
+						"fatalStyle": {
+								"foreground": "196",
+								"background": "11",
+								"styles": "7"
+						}
+					}
+			},
+			{
+					"name": "Test_Json",
+					"type": "JsonFile",
+					"config": {
+							"LayoutNames": [
+									"Time",
+									"Level",
+									"Name",
+									"Message"
+							],
+							"fileName": "",
+							"fileSize": 2097152,
+							"minLevel": 0,
+							"useColor": true,
+							"debugStyle": {
+								"foreground": "245",
+								"background": "24",
+								"styles": ""
+						},
+						"infoStyle": {
+								"foreground": "56",
+								"background": "234",
+								"styles": "1"
+						},
+						"warnStyle": {
+								"foreground": "226",
+								"background": "124",
+								"styles": "4"
+						},
+						"errorStyle": {
+								"foreground": "166",
+								"background": "232",
+								"styles": "1,4"
+						},
+						"fatalStyle": {
+								"foreground": "196",
+								"background": "11",
+								"styles": "7"
+						}
+					}
+			}
+	]
+}`
+
+	config := NewLogTargetConfigurations()
+	config.FromJSON(content)
+	assert.Equal(t, 2, len(config.Targets))
+
+	target1 := config.GetTarget("Test")
+	target2 := config.GetTarget("Test_Json")
+
+	assert.NotNil(t, target1)
+	assert.NotNil(t, target2)
+
+	assert.Equal(t, "Console", target1.Type)
+	assert.Equal(t, "JsonFile", target2.Type)
+
+	verifyLoggerConfiguration(t, target1.Configuration)
 }
