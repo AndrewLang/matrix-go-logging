@@ -1,6 +1,8 @@
 package logging
 
 import (
+	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -105,6 +107,28 @@ func createFolder(path string) bool {
 func deleteFolder(path string) bool {
 	err := os.RemoveAll(path)
 	return err != nil
+}
+
+func readAllText(filePath string) string {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	bytes, err := ioutil.ReadAll(file)
+	return string(bytes)
+}
+
+func writeToFile(filePath string, content string) error {
+	file, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(content)
+	return err
 }
 
 // RemoveContents remove

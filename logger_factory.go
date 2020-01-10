@@ -40,6 +40,17 @@ func (factory *LoggerFactory) Configure(config *LogTargetConfigurations) *Logger
 	return factory
 }
 
+// ConfigureFromFile configure from config file
+func (factory *LoggerFactory) ConfigureFromFile(file string) *LoggerFactory {
+	if fileExists(file) {
+		content := readAllText(file)
+		config := NewLogTargetConfigurations()
+		config.FromJSON(content)		
+		factory.Configure(config)
+	}
+	return factory
+}
+
 // Create create a logger instance
 func (factory *LoggerFactory) Create(name string) (ILogger, error) {
 	if factory.Configuration == nil {

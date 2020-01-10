@@ -1,4 +1,4 @@
-module github.com/andrewlang/matrix-go-logging/pkg
+module github.com/andrewlang/matrix-go-logging
 
 go 1.13
 

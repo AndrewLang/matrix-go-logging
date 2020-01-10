@@ -1,7 +1,6 @@
 package logging
 
 import (
-	// "fmt"
 	"strconv"
 	"testing"
 
@@ -57,6 +56,9 @@ func TestCreateComposeLoggerFromConfig(t *testing.T) {
 	factory := NewLoggerFactory().Configure(configuration)
 	logger, err := factory.Create(ConsoleLoggerName)
 
+	teardown := setupTestCase(t)
+	defer teardown(t, "compose_logger", "Factory Logger")
+
 	assert.Nil(t, err, "Error should be nil")
 	assert.NotNil(t, logger, "Logger should not be nil")
 
@@ -96,4 +98,34 @@ func TestRegisterCreator(t *testing.T) {
 	})
 	length := len(factory.creators)
 	assert.Equal(t, 5, length, "There should be 5 creators")
+}
+
+func TestConfigureFromFile(t *testing.T) {
+	teardown := setupTestCase(t)
+	defer teardown(t, "logging.config", "Factory configuration")
+
+	configuration := defaultLogTargetConfigs()
+	content := configuration.ToJSON()
+
+	file := "./test/logging.config.json"
+	err := writeToFile(file, content)
+
+	assert.Nil(t, err)
+
+	factory := NewLoggerFactory()
+	factory.ConfigureFromFile(file)
+
+	logger, err := factory.Create(ConsoleLoggerName)
+
+	assert.NotNil(t, logger)
+	assert.Nil(t, err)
+
+	content = "Logger factory loaded configuration from file"
+	logger.Debug(content).
+		Info(content).
+		Warn(content).
+		Error(content).
+		Fatal(content)
+
+	logger.Close()
 }

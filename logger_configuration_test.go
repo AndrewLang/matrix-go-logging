@@ -33,12 +33,12 @@ func composeLogTargetConfigs() *LogTargetConfigurations {
 	config.AddTarget(defaultLogTargetConfig())
 
 	fileConfig := NewLogTargetConfiguration("File", FileLoggerName, []string{Time, Level, Name, Indent, Message})
-	fileConfig.Configuration.FileName = "./test/compose_log.txt"
+	fileConfig.Configuration.FileName = "./test/compose_logger.txt"
 
 	config.AddTarget(fileConfig)
 
 	jsonConfig := NewLogTargetConfiguration("JsonFile", JSONFileLoggerName, []string{Message})
-	jsonConfig.Configuration.FileName = "./test/compose_log.json"
+	jsonConfig.Configuration.FileName = "./test/compose_logger.json"
 	jsonConfig.Configuration.MinLevel = LevelFatal.Value
 	config.AddTarget(jsonConfig)
 
