@@ -1,300 +1,300 @@
 [
 	{
-		"datetime": "2020-01-09 15:16:15.694",
+		"datetime": "2020-01-10 08:28:44.875",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 0  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.700",
+		"datetime": "2020-01-10 08:28:44.878",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 1  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.703",
+		"datetime": "2020-01-10 08:28:44.883",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 2  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.706",
+		"datetime": "2020-01-10 08:28:44.886",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 3  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.711",
+		"datetime": "2020-01-10 08:28:44.889",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 4  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.714",
+		"datetime": "2020-01-10 08:28:44.895",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 5  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.717",
+		"datetime": "2020-01-10 08:28:44.898",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 6  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.722",
+		"datetime": "2020-01-10 08:28:44.901",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 7  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.725",
+		"datetime": "2020-01-10 08:28:44.907",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 8  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.728",
+		"datetime": "2020-01-10 08:28:44.910",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 9  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.733",
+		"datetime": "2020-01-10 08:28:44.913",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 10  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.736",
+		"datetime": "2020-01-10 08:28:44.919",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 11  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.739",
+		"datetime": "2020-01-10 08:28:44.922",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 12  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.742",
+		"datetime": "2020-01-10 08:28:44.924",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 13  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.750",
+		"datetime": "2020-01-10 08:28:44.931",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 14  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.753",
+		"datetime": "2020-01-10 08:28:44.935",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 15  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.758",
+		"datetime": "2020-01-10 08:28:44.938",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 16  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.762",
+		"datetime": "2020-01-10 08:28:44.943",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 17  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.765",
+		"datetime": "2020-01-10 08:28:44.946",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 18  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.771",
+		"datetime": "2020-01-10 08:28:44.948",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 19  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.773",
+		"datetime": "2020-01-10 08:28:44.955",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 20  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.776",
+		"datetime": "2020-01-10 08:28:44.957",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 21  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.781",
+		"datetime": "2020-01-10 08:28:44.960",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 22  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.784",
+		"datetime": "2020-01-10 08:28:44.965",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 23  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.787",
+		"datetime": "2020-01-10 08:28:44.968",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 24  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.792",
+		"datetime": "2020-01-10 08:28:44.971",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 25  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.795",
+		"datetime": "2020-01-10 08:28:44.976",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 26  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.798",
+		"datetime": "2020-01-10 08:28:44.979",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 27  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.803",
+		"datetime": "2020-01-10 08:28:44.981",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 28  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.806",
+		"datetime": "2020-01-10 08:28:44.984",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 29  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.809",
+		"datetime": "2020-01-10 08:28:44.990",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 30  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.812",
+		"datetime": "2020-01-10 08:28:44.993",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 31  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.817",
+		"datetime": "2020-01-10 08:28:44.995",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 32  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.820",
+		"datetime": "2020-01-10 08:28:45.01",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 33  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.822",
+		"datetime": "2020-01-10 08:28:45.04",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 34  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.828",
+		"datetime": "2020-01-10 08:28:45.06",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 35  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.831",
+		"datetime": "2020-01-10 08:28:45.11",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 36  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.835",
+		"datetime": "2020-01-10 08:28:45.14",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 37  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.840",
+		"datetime": "2020-01-10 08:28:45.17",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 38  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.843",
+		"datetime": "2020-01-10 08:28:45.19",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 39  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.846",
+		"datetime": "2020-01-10 08:28:45.25",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 40  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.851",
+		"datetime": "2020-01-10 08:28:45.28",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 41  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.854",
+		"datetime": "2020-01-10 08:28:45.30",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 42  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.856",
+		"datetime": "2020-01-10 08:28:45.36",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 43  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.862",
+		"datetime": "2020-01-10 08:28:45.39",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 44  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.865",
+		"datetime": "2020-01-10 08:28:45.41",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 45  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.868",
+		"datetime": "2020-01-10 08:28:45.44",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 46  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.873",
+		"datetime": "2020-01-10 08:28:45.49",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 47  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.876",
+		"datetime": "2020-01-10 08:28:45.52",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 48  "
 	},
 	{
-		"datetime": "2020-01-09 15:16:15.878",
+		"datetime": "2020-01-10 08:28:45.55",
 		"name": "Console",
 		"level": "Fatal",
 		"message": "Logger created from factory for output multiple target 49  "
