@@ -61,7 +61,7 @@ func (f Formatter) FormatError(err error) string {
 
 // FormatDateTime format given date
 func (f Formatter) FormatDateTime(date time.Time) string {
-	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d.%02d", date.Year(), date.Month(), date.Day(), date.Hour(), date.Minute(), date.Second(), date.Nanosecond()/1000000)
+	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d.%03d", date.Year(), date.Month(), date.Day(), date.Hour(), date.Minute(), date.Second(), date.Nanosecond()/1000000)
 }
 
 // FormatNow format now
