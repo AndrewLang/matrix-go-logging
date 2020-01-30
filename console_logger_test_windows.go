@@ -2,6 +2,7 @@ package logging
 
 import (
 	"fmt"
+	"os"
 
 	"golang.org/x/sys/windows"
 	"testing"

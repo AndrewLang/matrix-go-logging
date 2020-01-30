@@ -1,7 +1,7 @@
 package logging
 
-import (
-	"fmt"
+import (	
+	"os"
 	"golang.org/x/sys/windows"
 )
 
