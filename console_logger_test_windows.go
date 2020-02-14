@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"golang.org/x/sys/windows"
 	"testing"
+
+	"golang.org/x/sys/windows"
 )
 
+// TestColorfulConsole test colorfull console on windows
 func TestColorfulConsole(t *testing.T) {
 	stdout := windows.Handle(os.Stdout.Fd())
 	var originalMode uint32
